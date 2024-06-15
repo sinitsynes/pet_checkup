@@ -5,6 +5,7 @@ import (
 	"net/http"
 
 	"pet_checkup/languages"
+	"pet_checkup/panels"
 	"pet_checkup/pets"
 
 	"github.com/go-chi/chi"
@@ -24,5 +25,6 @@ func main() {
 
 	apiRouter.Mount("/languages", languages.LanguageRouter())
 	apiRouter.Mount("/pets", pets.PetRouter())
+	apiRouter.Mount("/panels", panels.PanelsRouter())
 	http.ListenAndServe(":8000", baseRouter)
 }

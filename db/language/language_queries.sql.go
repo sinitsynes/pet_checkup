@@ -12,14 +12,27 @@ import (
 const createLanguage = `-- name: CreateLanguage :one
 INSERT INTO languages (name)
 VALUES ($1)
-RETURNING id, name
+RETURNING id, name, label
 `
 
 func (q *Queries) CreateLanguage(ctx context.Context, name string) (Language, error) {
 	row := q.db.QueryRow(ctx, createLanguage, name)
 	var i Language
-	err := row.Scan(&i.ID, &i.Name)
+	err := row.Scan(&i.ID, &i.Name, &i.Label)
 	return i, err
+}
+
+const getLanguageID = `-- name: GetLanguageID :one
+SELECT id
+FROM languages
+WHERE label = $1
+`
+
+func (q *Queries) GetLanguageID(ctx context.Context, label string) (int32, error) {
+	row := q.db.QueryRow(ctx, getLanguageID, label)
+	var id int32
+	err := row.Scan(&id)
+	return id, err
 }
 
 const getLanguages = `-- name: GetLanguages :many

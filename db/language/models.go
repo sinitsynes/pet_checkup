@@ -5,6 +5,7 @@
 package db
 
 type Language struct {
-	ID   int32  `json:"id"`
-	Name string `json:"name"`
+	ID    int32  `json:"id"`
+	Name  string `json:"name"`
+	Label string `json:"label"`
 }

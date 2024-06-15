@@ -18,3 +18,12 @@ sql:
         package: "db"
         sql_package: "pgx/v5"
         out: "db/language"
+  - engine: "postgresql"
+    schema: ["sql/panels_schema.sql", "sql/language_schema.sql"]
+    queries: "sql/panels_queries.sql"
+    gen:
+      go:
+        emit_json_tags: true
+        package: "db"
+        sql_package: "pgx/v5"
+        out: "db/panels"

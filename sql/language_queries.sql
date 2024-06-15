@@ -5,8 +5,13 @@ RETURNING *;
 
 -- name: RemoveLanguage :exec
 DELETE FROM languages
-WHERE id = sqlc.arg('id');
+WHERE id = @id;
 
 -- name: GetLanguages :many
 SELECT name
 FROM languages;
+
+-- name: GetLanguageID :one
+SELECT id
+FROM languages
+WHERE label = @label;
