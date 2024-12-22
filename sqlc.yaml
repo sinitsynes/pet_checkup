@@ -1,29 +1,55 @@
 version: "2"
 sql:
   - engine: "postgresql"
-    schema: "sql/pets_schema.sql"
-    queries: "sql/pets_queries.sql"
+    schema: "sql/schema.sql"
+    queries: "sql/queries/languages.sql"
     gen:
       go:
         emit_json_tags: true
-        package: "db"
         sql_package: "pgx/v5"
-        out: "db/pets"
+        out: "internal/db/languages"
+
   - engine: "postgresql"
-    schema: "sql/language_schema.sql"
-    queries: "sql/language_queries.sql"
+    schema: "sql/schema.sql"
+    queries: "sql/queries/pets.sql"
     gen:
       go:
         emit_json_tags: true
-        package: "db"
         sql_package: "pgx/v5"
-        out: "db/language"
+        out: "internal/db/pets"
+
   - engine: "postgresql"
-    schema: ["sql/panels_schema.sql", "sql/language_schema.sql"]
-    queries: "sql/panels_queries.sql"
+    schema: "sql/schema.sql"
+    queries: "sql/queries/panels/components.sql"
     gen:
       go:
         emit_json_tags: true
-        package: "db"
         sql_package: "pgx/v5"
-        out: "db/panels"
+        out: "internal/db/panels/components"
+
+  - engine: "postgresql"
+    schema: "sql/schema.sql"
+    queries: "sql/queries/panels/measurement_units.sql"
+    gen:
+      go:
+        emit_json_tags: true
+        sql_package: "pgx/v5"
+        out: "internal/db/panels/measurement_units"
+
+  - engine: "postgresql"
+    schema: "sql/schema.sql"
+    queries: "sql/queries/panels/measurements.sql"
+    gen:
+      go:
+        emit_json_tags: true
+        sql_package: "pgx/v5"
+        out: "internal/db/panels/measurements"
+
+  - engine: "postgresql"
+    schema: "sql/schema.sql"
+    queries: "sql/queries/panels/weight.sql"
+    gen:
+      go:
+        emit_json_tags: true
+        sql_package: "pgx/v5"
+        out: "internal/db/panels/weight"

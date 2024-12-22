@@ -1,0 +1,21 @@
+services:
+  db:
+    container_name: db
+    hostname: db
+    env_file: .env
+    environment:
+      POSTGRES_USER: ${USER}
+      POSTGRES_PASSWORD: ${PASSWORD}
+      POSTGRES_DB: ${NAME}
+    ports:
+      - 5432:5432
+
+  api:
+    container_name: api
+    hostname: api
+    env_file: .env
+    depends_on:
+      db:
+        condition: service_started
+    ports:
+      - 8000:8000

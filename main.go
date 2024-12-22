@@ -1,30 +1,36 @@
 package main
 
 import (
-	"log"
+	"context"
 	"net/http"
-
-	"pet_checkup/languages"
-	"pet_checkup/panels"
-	"pet_checkup/pets"
-
-	"github.com/go-chi/chi"
-	"github.com/go-chi/chi/v5/middleware"
-	"github.com/joho/godotenv"
+	"pet_checkup/api"
+	"pet_checkup/internal/app"
+	"pet_checkup/internal/db"
 )
 
 func main() {
-	err := godotenv.Load()
+	ctx := context.Background()
+	app, err := run(ctx)
 	if err != nil {
-		log.Fatalf("Error loading .env file: %q", err)
+		panic(err.Error())
 	}
-	baseRouter := chi.NewRouter()
-	baseRouter.Use(middleware.Recoverer)
-	apiRouter := chi.NewRouter()
-	baseRouter.Mount("/api", apiRouter)
+	router := api.AppRouter(app)
 
-	apiRouter.Mount("/languages", languages.LanguageRouter())
-	apiRouter.Mount("/pets", pets.PetRouter())
-	apiRouter.Mount("/panels", panels.PanelsRouter())
-	http.ListenAndServe(":8000", baseRouter)
+	defer app.DbPool.Close()
+
+	http.ListenAndServe(":8000", router)
+}
+
+func run(ctx context.Context) (app.Application, error) {
+	app := app.Application{}
+	connString, err := db.ConnectionString()
+	if err != nil {
+		return app, err
+	}
+	dbPool, err := db.NewDBPool(ctx, connString)
+	if err != nil {
+		return app, err
+	}
+	app.DbPool = dbPool
+	return app, nil
 }
