@@ -4,8 +4,6 @@ services:
     container_name: db
     hostname: ${POSTGRES_HOST}
     env_file: .env
-    # environment:
-    #   PGDATA: /var/lib/postgresql/data/pet_checkup/
     ports:
       - 5432:5432
     volumes:
@@ -34,7 +32,9 @@ services:
       ]
 
   api:
-    build: .
+    build:
+      dockerfile: Dockerfile
+      context: .
     container_name: api
     hostname: api
     env_file: .env
