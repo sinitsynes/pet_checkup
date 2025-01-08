@@ -1,4 +1,4 @@
-.phone: up down
+.phony: up down
 
 up:
 	docker compose up api --build
