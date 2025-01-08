@@ -1,7 +1,7 @@
 package api
 
 import (
-	"pet_checkup/api/language"
+	"pet_checkup/api/languages"
 	"pet_checkup/api/panels"
 	"pet_checkup/api/pets"
 	"pet_checkup/internal/app"
@@ -10,11 +10,11 @@ import (
 	"github.com/go-chi/chi/v5/middleware"
 )
 
-func AppRouter(app app.Application) *chi.Mux {
+func AppRouter(app *app.Application) *chi.Mux {
 	router := chi.NewRouter()
 	router.Use(middleware.Recoverer)
 
-	languageHandler := language.LanguageHandler{DbPool: app.DbPool}
+	languageHandler := languages.LanguageHandler{DbPool: app.DbPool}
 	petsHandler := pets.PetHandler{DbPool: app.DbPool}
 
 	panelComponentHandler := panels.ComponentHandler{DbPool: app.DbPool}

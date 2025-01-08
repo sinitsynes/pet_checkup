@@ -1,4 +1,7 @@
-.phone: up
+.phone: up down
 
 up:
-	docker compose start api -d --build
+	docker compose up api --build
+
+down:
+	docker compose down

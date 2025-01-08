@@ -1,10 +1,10 @@
-package language
+package languages
 
 import (
 	"encoding/json"
 	"log"
 	"net/http"
-	"pet_checkup/internal/db/languages"
+	db "pet_checkup/internal/db/languages"
 
 	"github.com/jackc/pgx/v5/pgxpool"
 )
@@ -14,7 +14,7 @@ type LanguageHandler struct {
 }
 
 func (handler *LanguageHandler) GetAvailableLanguages(w http.ResponseWriter, r *http.Request) {
-	query := languages.New(handler.DbPool)
+	query := db.New(handler.DbPool)
 	langs, err := query.GetLanguages(r.Context())
 	if err != nil {
 		log.Fatal(err.Error())
@@ -27,7 +27,7 @@ func (handler *LanguageHandler) GetAvailableLanguages(w http.ResponseWriter, r *
 }
 
 func (handler *LanguageHandler) CreateLanguage(w http.ResponseWriter, r *http.Request) {
-	lang := &languages.CreateLanguageParams{}
+	lang := &db.CreateLanguageParams{}
 	decoderErr := json.NewDecoder(r.Body).Decode(lang)
 
 	if decoderErr != nil {
@@ -37,7 +37,7 @@ func (handler *LanguageHandler) CreateLanguage(w http.ResponseWriter, r *http.Re
 		w.Write([]byte("missing Label"))
 		return
 	}
-	query := languages.New(handler.DbPool)
+	query := db.New(handler.DbPool)
 	query.CreateLanguage(r.Context(), *lang)
 	w.WriteHeader(http.StatusCreated)
 }

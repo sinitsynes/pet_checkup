@@ -1,7 +1,7 @@
 version: "2"
 sql:
   - engine: "postgresql"
-    schema: "sql/schema.sql"
+    schema: "sql/migrations"
     queries: "sql/queries/languages.sql"
     gen:
       go:
@@ -10,7 +10,7 @@ sql:
         out: "internal/db/languages"
 
   - engine: "postgresql"
-    schema: "sql/schema.sql"
+    schema: "sql/migrations"
     queries: "sql/queries/pets.sql"
     gen:
       go:
@@ -19,7 +19,7 @@ sql:
         out: "internal/db/pets"
 
   - engine: "postgresql"
-    schema: "sql/schema.sql"
+    schema: "sql/migrations"
     queries: "sql/queries/panels/components.sql"
     gen:
       go:
@@ -28,7 +28,7 @@ sql:
         out: "internal/db/panels/components"
 
   - engine: "postgresql"
-    schema: "sql/schema.sql"
+    schema: "sql/migrations"
     queries: "sql/queries/panels/measurement_units.sql"
     gen:
       go:
@@ -37,7 +37,7 @@ sql:
         out: "internal/db/panels/measurement_units"
 
   - engine: "postgresql"
-    schema: "sql/schema.sql"
+    schema: "sql/migrations"
     queries: "sql/queries/panels/measurements.sql"
     gen:
       go:
@@ -46,7 +46,7 @@ sql:
         out: "internal/db/panels/measurements"
 
   - engine: "postgresql"
-    schema: "sql/schema.sql"
+    schema: "sql/migrations"
     queries: "sql/queries/panels/weight.sql"
     gen:
       go:
