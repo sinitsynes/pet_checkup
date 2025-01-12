@@ -1,4 +1,4 @@
-package panels
+package measurements
 
 import (
 	"encoding/json"
@@ -14,7 +14,12 @@ type MeasurementsHandler struct {
 }
 
 func (h *MeasurementsHandler) CreateMeasurement(w http.ResponseWriter, r *http.Request) {
-	petID := utils.IDfromUrl(r, utils.PetIDParam)
+	petID, err := utils.IDfromUrl(r, "PetID")
+	if err != nil {
+		w.WriteHeader(http.StatusBadRequest)
+		w.Write([]byte(err.Error()))
+		return
+	}
 	newMeasurementParams := []db.CreateMeasurementParams{}
 	decoderErr := json.NewDecoder(r.Body).Decode(&newMeasurementParams)
 	if decoderErr != nil {

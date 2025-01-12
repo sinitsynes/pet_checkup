@@ -1,4 +1,4 @@
-package panels
+package weight
 
 import (
 	"encoding/json"
@@ -8,8 +8,6 @@ import (
 
 	"github.com/jackc/pgx/v5/pgxpool"
 )
-
-const weightID = "weightID"
 
 type WeightHandler struct {
 	DbPool *pgxpool.Pool
@@ -30,7 +28,12 @@ func (handler WeightHandler) AddWeightRecord(w http.ResponseWriter, r *http.Requ
 }
 
 func (handler WeightHandler) GetWeightRecords(w http.ResponseWriter, r *http.Request) {
-	petID := utils.IDfromUrl(r, "petID")
+	petID, err := utils.IDfromUrl(r, "petID")
+	if err != nil {
+		w.WriteHeader(http.StatusBadRequest)
+		w.Write([]byte(err.Error()))
+		return
+	}
 	query := db.New(handler.DbPool)
 	measures, dbErr := query.GetWeightMeasures(r.Context(), petID)
 	if dbErr != nil {
@@ -43,7 +46,12 @@ func (handler WeightHandler) GetWeightRecords(w http.ResponseWriter, r *http.Req
 }
 
 func (handler WeightHandler) DeleteWeightRecord(w http.ResponseWriter, r *http.Request) {
-	weightID := utils.IDfromUrl(r, weightID)
+	weightID, err := utils.IDfromUrl(r, "WeightID")
+	if err != nil {
+		w.WriteHeader(http.StatusBadRequest)
+		w.Write([]byte(err.Error()))
+		return
+	}
 	query := db.New(handler.DbPool)
 	query.RemoveWeightMeasure(r.Context(), weightID)
 	w.WriteHeader(http.StatusNoContent)

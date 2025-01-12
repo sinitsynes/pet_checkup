@@ -9,11 +9,11 @@ import (
 	"github.com/jackc/pgx/v5/pgxpool"
 )
 
-type LanguageHandler struct {
+type LanguagesHandler struct {
 	DbPool *pgxpool.Pool
 }
 
-func (handler *LanguageHandler) GetAvailableLanguages(w http.ResponseWriter, r *http.Request) {
+func (handler *LanguagesHandler) GetAvailableLanguages(w http.ResponseWriter, r *http.Request) {
 	query := db.New(handler.DbPool)
 	langs, err := query.GetLanguages(r.Context())
 	if err != nil {
@@ -26,7 +26,7 @@ func (handler *LanguageHandler) GetAvailableLanguages(w http.ResponseWriter, r *
 	w.Write(res)
 }
 
-func (handler *LanguageHandler) CreateLanguage(w http.ResponseWriter, r *http.Request) {
+func (handler *LanguagesHandler) CreateLanguage(w http.ResponseWriter, r *http.Request) {
 	lang := &db.CreateLanguageParams{}
 	decoderErr := json.NewDecoder(r.Body).Decode(lang)
 

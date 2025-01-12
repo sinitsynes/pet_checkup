@@ -29,7 +29,12 @@ func (handler *PetHandler) CreateRecord(w http.ResponseWriter, r *http.Request) 
 }
 
 func (handler *PetHandler) EditRecord(w http.ResponseWriter, r *http.Request) {
-	petID := utils.IDfromUrl(r, utils.PetIDParam)
+	petID, err := utils.IDfromUrl(r, "PetID")
+	if err != nil {
+		w.WriteHeader(http.StatusBadRequest)
+		w.Write([]byte(err.Error()))
+		return
+	}
 	updatePetParams := &db.UpdatePetParams{ID: petID}
 	decoder_err := json.NewDecoder(r.Body).Decode(updatePetParams)
 	if decoder_err != nil {
@@ -45,7 +50,12 @@ func (handler *PetHandler) EditRecord(w http.ResponseWriter, r *http.Request) {
 }
 
 func (handler *PetHandler) GetRecord(w http.ResponseWriter, r *http.Request) {
-	petID := utils.IDfromUrl(r, utils.PetIDParam)
+	petID, err := utils.IDfromUrl(r, "PetIDParam")
+	if err != nil {
+		w.WriteHeader(http.StatusBadRequest)
+		w.Write([]byte(err.Error()))
+		return
+	}
 	query := db.New(handler.DbPool)
 	pet, db_err := query.GetPet(r.Context(), petID)
 	if db_err != nil {
@@ -61,7 +71,12 @@ func (handler *PetHandler) GetRecord(w http.ResponseWriter, r *http.Request) {
 }
 
 func (handler *PetHandler) DeleteRecord(w http.ResponseWriter, r *http.Request) {
-	petID := utils.IDfromUrl(r, utils.PetIDParam)
+	petID, err := utils.IDfromUrl(r, "PetIDParam")
+	if err != nil {
+		w.WriteHeader(http.StatusBadRequest)
+		w.Write([]byte(err.Error()))
+		return
+	}
 	query := db.New(handler.DbPool)
 	if err := query.DeletePet(r.Context(), petID); err != nil {
 		w.WriteHeader(http.StatusInternalServerError)

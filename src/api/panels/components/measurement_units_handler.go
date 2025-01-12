@@ -1,4 +1,4 @@
-package panels
+package components
 
 import (
 	"encoding/json"
@@ -7,14 +7,9 @@ import (
 	db "pet_checkup/internal/db/panels/measurement_units"
 
 	"github.com/go-chi/chi/v5"
-	"github.com/jackc/pgx/v5/pgxpool"
 )
 
-type MeasurementUnitsHandler struct {
-	DbPool *pgxpool.Pool
-}
-
-func (h *MeasurementUnitsHandler) CreateMeasurementUnit(w http.ResponseWriter, r *http.Request) {
+func (h *ComponentsHandler) CreateMeasurementUnit(w http.ResponseWriter, r *http.Request) {
 	newMeasurementUnit := &db.CreateMeasurementUnitParams{}
 	decoderErr := json.NewDecoder(r.Body).Decode(newMeasurementUnit)
 	if decoderErr != nil {
@@ -29,8 +24,13 @@ func (h *MeasurementUnitsHandler) CreateMeasurementUnit(w http.ResponseWriter, r
 	w.WriteHeader(http.StatusCreated)
 }
 
-func (h *MeasurementUnitsHandler) UpdateMeasurementUnit(w http.ResponseWriter, r *http.Request) {
-	unitID := utils.IDfromUrl(r, MeasurementUnitID)
+func (h *ComponentsHandler) UpdateMeasurementUnit(w http.ResponseWriter, r *http.Request) {
+	unitID, err := utils.IDfromUrl(r, "MeasurementUnitID")
+	if err != nil {
+		w.WriteHeader(http.StatusBadRequest)
+		w.Write([]byte(err.Error()))
+		return
+	}
 	updateUnitParams := &db.UpdateMeasurementUnitParams{ID: unitID}
 	decoderErr := json.NewDecoder(r.Body).Decode(updateUnitParams)
 	if decoderErr != nil {
@@ -45,7 +45,7 @@ func (h *MeasurementUnitsHandler) UpdateMeasurementUnit(w http.ResponseWriter, r
 	w.WriteHeader(http.StatusAccepted)
 }
 
-func (h *MeasurementUnitsHandler) GetMeasurementUnits(w http.ResponseWriter, r *http.Request) {
+func (h *ComponentsHandler) GetMeasurementUnits(w http.ResponseWriter, r *http.Request) {
 	langLabel := chi.URLParam(r, "lang")
 	query := db.New(h.DbPool)
 	units, dbErr := query.GetMeasurementUnits(r.Context(), langLabel)

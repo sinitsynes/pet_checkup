@@ -1,4 +1,4 @@
-package panels
+package components
 
 import (
 	"encoding/json"
@@ -8,13 +8,11 @@ import (
 	"github.com/jackc/pgx/v5/pgxpool"
 )
 
-const MeasurementUnitID = "measurementUnitID"
-
-type ComponentHandler struct {
+type ComponentsHandler struct {
 	DbPool *pgxpool.Pool
 }
 
-func (h *ComponentHandler) CreateComponent(w http.ResponseWriter, r *http.Request) {
+func (h *ComponentsHandler) CreateComponent(w http.ResponseWriter, r *http.Request) {
 	newComponent := &db.CreatePanelComponentParams{}
 	decoderErr := json.NewDecoder(r.Body).Decode(newComponent)
 	if decoderErr != nil {
@@ -30,7 +28,7 @@ func (h *ComponentHandler) CreateComponent(w http.ResponseWriter, r *http.Reques
 	w.WriteHeader(http.StatusCreated)
 }
 
-func (h *ComponentHandler) GetComponents(w http.ResponseWriter, r *http.Request) {
+func (h *ComponentsHandler) GetComponents(w http.ResponseWriter, r *http.Request) {
 	langLabel := r.URL.Query().Get("lang")
 	q := db.New(h.DbPool)
 	components, dbErr := q.GetComponents(r.Context(), langLabel)
