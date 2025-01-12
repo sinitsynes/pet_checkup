@@ -17,8 +17,8 @@ func AppRouter(app *app.Application) *chi.Mux {
 	router.Use(middleware.Recoverer)
 
 	router.Route("/api", func(r chi.Router) {
-		languages.LanguageRoute(app.DbPool)
-		pets.PetsRoute(app.DbPool)
+		languages.LanguageRouter(app.DbPool)
+		pets.PetsRouter(app.DbPool)
 		weight.WeightRouter(app.DbPool)
 		components.ComponentsRouter(app.DbPool)
 		measurements.MeasurementsRouter(app.DbPool)

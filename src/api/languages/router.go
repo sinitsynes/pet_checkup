@@ -5,7 +5,7 @@ import (
 	"github.com/jackc/pgx/v5/pgxpool"
 )
 
-func LanguageRoute(DBPool *pgxpool.Pool) chi.Router {
+func LanguageRouter(DBPool *pgxpool.Pool) chi.Router {
 	r := chi.NewRouter()
 	h := LanguagesHandler{DBPool}
 	return r.Route("/languages", func(r chi.Router) {

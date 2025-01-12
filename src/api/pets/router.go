@@ -5,7 +5,7 @@ import (
 	"github.com/jackc/pgx/v5/pgxpool"
 )
 
-func PetsRoute(DBPool *pgxpool.Pool) chi.Router {
+func PetsRouter(DBPool *pgxpool.Pool) chi.Router {
 	r := chi.NewRouter()
 	h := PetHandler{DBPool}
 	return r.Route("/pets", func(r chi.Router) {
