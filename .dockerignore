@@ -1,0 +1,65 @@
+# Git
+.git
+.gitignore
+
+# Environment files
+.env
+.env.*
+*.env
+
+# Docker files
+Dockerfile
+docker-compose.yml
+.dockerignore
+
+# IDE and editor files
+.vscode
+.idea
+*.swp
+*.swo
+*~
+
+# Documentation
+README.md
+*.md
+
+# CI/CD
+.github
+.gitlab-ci.yml
+
+# Test files
+*_test.go
+testdata
+
+# Build artifacts
+*.exe
+*.dll
+*.so
+*.dylib
+bin/
+dist/
+
+# Temporary files
+tmp/
+temp/
+*.tmp
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+logs/
+
+# Database files (if any local db files)
+*.db
+*.sqlite
+*.sqlite3
+
+# Migrations (already mounted as volume)
+sql/migrations
+
+# Other
+coverage.txt
+*.out
