@@ -1,18 +1,22 @@
--- name: CreatePet :exec
+-- name: Create :one
 INSERT INTO pets (name, birth, passport, chip)
-VALUES ($1, $2, $3, $4);
+VALUES ($1, $2, $3, $4)
+RETURNING *;
 
--- name: GetPet :one
+-- name: GetByID :one
 SELECT * FROM pets WHERE id = $1;
 
--- name: UpdatePet :exec
-UPDATE pets SET 
-    name = coalesce(sqlc.arg('name'), name), 
-    birth = coalesce(sqlc.narg('birth'), birth), 
-    passport = coalesce(sqlc.narg('passport'), passport), 
+-- name: UpdateByID :one
+UPDATE pets SET
+    name = coalesce(sqlc.narg('name'), name),
+    birth = coalesce(sqlc.narg('birth'), birth),
+    passport = coalesce(sqlc.narg('passport'), passport),
     chip = coalesce(sqlc.narg('chip'), chip)
-WHERE id = @id;
+WHERE id = @id
+RETURNING *;
 
--- name: DeletePet :exec
+-- name: DeleteByID :exec
 DELETE FROM pets WHERE id = $1;
 
+-- name: GetAll :many
+SELECT * FROM pets;

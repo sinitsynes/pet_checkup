@@ -7,46 +7,45 @@ package language
 
 import (
 	"context"
+
+	"github.com/jackc/pgx/v5/pgtype"
 )
 
-const createLanguage = `-- name: CreateLanguage :one
+const create = `-- name: Create :one
 INSERT INTO languages (name, label)
 VALUES ($1, $2)
 RETURNING id, name, label
 `
 
-type CreateLanguageParams struct {
+type CreateParams struct {
 	Name  string `json:"name"`
 	Label string `json:"label"`
 }
 
-func (q *Queries) CreateLanguage(ctx context.Context, arg CreateLanguageParams) (Language, error) {
-	row := q.db.QueryRow(ctx, createLanguage, arg.Name, arg.Label)
+func (q *Queries) Create(ctx context.Context, arg CreateParams) (Language, error) {
+	row := q.db.QueryRow(ctx, create, arg.Name, arg.Label)
 	var i Language
 	err := row.Scan(&i.ID, &i.Name, &i.Label)
 	return i, err
 }
 
-const getLanguagebyID = `-- name: GetLanguagebyID :one
-SELECT id, name, label
-FROM languages
+const deleteByID = `-- name: DeleteByID :exec
+DELETE FROM languages
 WHERE id = $1
 `
 
-func (q *Queries) GetLanguagebyID(ctx context.Context, id int32) (Language, error) {
-	row := q.db.QueryRow(ctx, getLanguagebyID, id)
-	var i Language
-	err := row.Scan(&i.ID, &i.Name, &i.Label)
-	return i, err
+func (q *Queries) DeleteByID(ctx context.Context, id int32) error {
+	_, err := q.db.Exec(ctx, deleteByID, id)
+	return err
 }
 
-const getLanguages = `-- name: GetLanguages :many
+const getAll = `-- name: GetAll :many
 SELECT id, name, label
 FROM languages
 `
 
-func (q *Queries) GetLanguages(ctx context.Context) ([]Language, error) {
-	rows, err := q.db.Query(ctx, getLanguages)
+func (q *Queries) GetAll(ctx context.Context) ([]Language, error) {
+	rows, err := q.db.Query(ctx, getAll)
 	if err != nil {
 		return nil, err
 	}
@@ -65,12 +64,36 @@ func (q *Queries) GetLanguages(ctx context.Context) ([]Language, error) {
 	return items, nil
 }
 
-const removeLanguage = `-- name: RemoveLanguage :exec
-DELETE FROM languages
+const getByID = `-- name: GetByID :one
+SELECT id, name, label
+FROM languages
 WHERE id = $1
 `
 
-func (q *Queries) RemoveLanguage(ctx context.Context, id int32) error {
-	_, err := q.db.Exec(ctx, removeLanguage, id)
-	return err
+func (q *Queries) GetByID(ctx context.Context, id int32) (Language, error) {
+	row := q.db.QueryRow(ctx, getByID, id)
+	var i Language
+	err := row.Scan(&i.ID, &i.Name, &i.Label)
+	return i, err
+}
+
+const updateByID = `-- name: UpdateByID :one
+UPDATE languages
+SET name = coalesce($1, name),
+    label = coalesce($2, label)
+WHERE id = $3
+RETURNING id, name, label
+`
+
+type UpdateByIDParams struct {
+	Name  pgtype.Text `json:"name"`
+	Label pgtype.Text `json:"label"`
+	ID    int32       `json:"id"`
+}
+
+func (q *Queries) UpdateByID(ctx context.Context, arg UpdateByIDParams) (Language, error) {
+	row := q.db.QueryRow(ctx, updateByID, arg.Name, arg.Label, arg.ID)
+	var i Language
+	err := row.Scan(&i.ID, &i.Name, &i.Label)
+	return i, err
 }

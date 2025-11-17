@@ -11,43 +11,26 @@ import (
 	"github.com/jackc/pgx/v5/pgtype"
 )
 
-const createPet = `-- name: CreatePet :exec
+const create = `-- name: Create :one
 INSERT INTO pets (name, birth, passport, chip)
 VALUES ($1, $2, $3, $4)
+RETURNING id, name, birth, passport, chip
 `
 
-type CreatePetParams struct {
+type CreateParams struct {
 	Name     string      `json:"name"`
 	Birth    pgtype.Date `json:"birth"`
 	Passport pgtype.Text `json:"passport"`
 	Chip     pgtype.Text `json:"chip"`
 }
 
-func (q *Queries) CreatePet(ctx context.Context, arg CreatePetParams) error {
-	_, err := q.db.Exec(ctx, createPet,
+func (q *Queries) Create(ctx context.Context, arg CreateParams) (Pet, error) {
+	row := q.db.QueryRow(ctx, create,
 		arg.Name,
 		arg.Birth,
 		arg.Passport,
 		arg.Chip,
 	)
-	return err
-}
-
-const deletePet = `-- name: DeletePet :exec
-DELETE FROM pets WHERE id = $1
-`
-
-func (q *Queries) DeletePet(ctx context.Context, id int32) error {
-	_, err := q.db.Exec(ctx, deletePet, id)
-	return err
-}
-
-const getPet = `-- name: GetPet :one
-SELECT id, name, birth, passport, chip FROM pets WHERE id = $1
-`
-
-func (q *Queries) GetPet(ctx context.Context, id int32) (Pet, error) {
-	row := q.db.QueryRow(ctx, getPet, id)
 	var i Pet
 	err := row.Scan(
 		&i.ID,
@@ -59,30 +42,95 @@ func (q *Queries) GetPet(ctx context.Context, id int32) (Pet, error) {
 	return i, err
 }
 
-const updatePet = `-- name: UpdatePet :exec
-UPDATE pets SET 
-    name = coalesce($1, name), 
-    birth = coalesce($2, birth), 
-    passport = coalesce($3, passport), 
-    chip = coalesce($4, chip)
-WHERE id = $5
+const deleteByID = `-- name: DeleteByID :exec
+DELETE FROM pets WHERE id = $1
 `
 
-type UpdatePetParams struct {
-	Name     string      `json:"name"`
+func (q *Queries) DeleteByID(ctx context.Context, id int32) error {
+	_, err := q.db.Exec(ctx, deleteByID, id)
+	return err
+}
+
+const getAll = `-- name: GetAll :many
+SELECT id, name, birth, passport, chip FROM pets
+`
+
+func (q *Queries) GetAll(ctx context.Context) ([]Pet, error) {
+	rows, err := q.db.Query(ctx, getAll)
+	if err != nil {
+		return nil, err
+	}
+	defer rows.Close()
+	var items []Pet
+	for rows.Next() {
+		var i Pet
+		if err := rows.Scan(
+			&i.ID,
+			&i.Name,
+			&i.Birth,
+			&i.Passport,
+			&i.Chip,
+		); err != nil {
+			return nil, err
+		}
+		items = append(items, i)
+	}
+	if err := rows.Err(); err != nil {
+		return nil, err
+	}
+	return items, nil
+}
+
+const getByID = `-- name: GetByID :one
+SELECT id, name, birth, passport, chip FROM pets WHERE id = $1
+`
+
+func (q *Queries) GetByID(ctx context.Context, id int32) (Pet, error) {
+	row := q.db.QueryRow(ctx, getByID, id)
+	var i Pet
+	err := row.Scan(
+		&i.ID,
+		&i.Name,
+		&i.Birth,
+		&i.Passport,
+		&i.Chip,
+	)
+	return i, err
+}
+
+const updateByID = `-- name: UpdateByID :one
+UPDATE pets SET
+    name = coalesce($1, name),
+    birth = coalesce($2, birth),
+    passport = coalesce($3, passport),
+    chip = coalesce($4, chip)
+WHERE id = $5
+RETURNING id, name, birth, passport, chip
+`
+
+type UpdateByIDParams struct {
+	Name     pgtype.Text `json:"name"`
 	Birth    pgtype.Date `json:"birth"`
 	Passport pgtype.Text `json:"passport"`
 	Chip     pgtype.Text `json:"chip"`
 	ID       int32       `json:"id"`
 }
 
-func (q *Queries) UpdatePet(ctx context.Context, arg UpdatePetParams) error {
-	_, err := q.db.Exec(ctx, updatePet,
+func (q *Queries) UpdateByID(ctx context.Context, arg UpdateByIDParams) (Pet, error) {
+	row := q.db.QueryRow(ctx, updateByID,
 		arg.Name,
 		arg.Birth,
 		arg.Passport,
 		arg.Chip,
 		arg.ID,
 	)
-	return err
+	var i Pet
+	err := row.Scan(
+		&i.ID,
+		&i.Name,
+		&i.Birth,
+		&i.Passport,
+		&i.Chip,
+	)
+	return i, err
 }
