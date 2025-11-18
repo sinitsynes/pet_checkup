@@ -1,25 +1,2 @@
-DELETE FROM panel_components
-WHERE
-    language_id = (
-        SELECT
-            id
-        FROM
-            languages
-        WHERE
-            name = 'Русский'
-    );
-
-DELETE FROM panel_measurement_units
-WHERE
-    language_id = (
-        SELECT
-            id
-        FROM
-            languages
-        WHERE
-            name = 'Русский'
-    );
-
-DELETE FROM languages
-WHERE
-    name = 'Русский';
+TRUNCATE TABLE panel_components RESTART IDENTITY CASCADE;
+TRUNCATE TABLE panel_measurement_units RESTART IDENTITY CASCADE;

@@ -51,12 +51,29 @@ func (q *Queries) DeleteByID(ctx context.Context, id int32) error {
 	return err
 }
 
-const getAll = `-- name: GetAll :many
+const getByID = `-- name: GetByID :one
+SELECT id, name, birth, passport, chip FROM pets WHERE id = $1
+`
+
+func (q *Queries) GetByID(ctx context.Context, id int32) (Pet, error) {
+	row := q.db.QueryRow(ctx, getByID, id)
+	var i Pet
+	err := row.Scan(
+		&i.ID,
+		&i.Name,
+		&i.Birth,
+		&i.Passport,
+		&i.Chip,
+	)
+	return i, err
+}
+
+const getMany = `-- name: GetMany :many
 SELECT id, name, birth, passport, chip FROM pets
 `
 
-func (q *Queries) GetAll(ctx context.Context) ([]Pet, error) {
-	rows, err := q.db.Query(ctx, getAll)
+func (q *Queries) GetMany(ctx context.Context) ([]Pet, error) {
+	rows, err := q.db.Query(ctx, getMany)
 	if err != nil {
 		return nil, err
 	}
@@ -79,23 +96,6 @@ func (q *Queries) GetAll(ctx context.Context) ([]Pet, error) {
 		return nil, err
 	}
 	return items, nil
-}
-
-const getByID = `-- name: GetByID :one
-SELECT id, name, birth, passport, chip FROM pets WHERE id = $1
-`
-
-func (q *Queries) GetByID(ctx context.Context, id int32) (Pet, error) {
-	row := q.db.QueryRow(ctx, getByID, id)
-	var i Pet
-	err := row.Scan(
-		&i.ID,
-		&i.Name,
-		&i.Birth,
-		&i.Passport,
-		&i.Chip,
-	)
-	return i, err
 }
 
 const updateByID = `-- name: UpdateByID :one

@@ -9,7 +9,7 @@ type CRUDHandler any
 // ListHandler provides a method to list all resources
 type ListHandler interface {
 	CRUDHandler
-	GetAll() http.Handler
+	GetMany() http.Handler
 }
 
 // CreateHandler provides a method to create a new resource
@@ -43,14 +43,14 @@ type RouteConfig struct {
 }
 
 // MakeCRUDRouter creates a generic CRUD router based on which interfaces the handler implements
-func MakeCRUDRouter(config RouteConfig) http.Handler {
+func MakeCRUDRouter(config RouteConfig) *http.ServeMux {
 	mux := http.NewServeMux()
 	basePath := config.BasePath
 	handler := config.Handler
 
 	// Register LIST endpoint if handler implements ListHandler
 	if h, ok := handler.(ListHandler); ok {
-		mux.Handle("GET "+basePath, h.GetAll())
+		mux.Handle("GET "+basePath, h.GetMany())
 	}
 
 	// Register CREATE endpoint if handler implements CreateHandler

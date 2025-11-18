@@ -18,5 +18,5 @@ RETURNING *;
 -- name: DeleteByID :exec
 DELETE FROM pets WHERE id = $1;
 
--- name: GetAll :many
+-- name: GetMany :many
 SELECT * FROM pets;

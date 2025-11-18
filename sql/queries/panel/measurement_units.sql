@@ -1,14 +1,23 @@
--- name: CreateMeasurementUnit :exec
-INSERT INTO panel_measurement_units (name, language_id)
-VALUES ($1, (SELECT id FROM languages WHERE label=$2));
+-- name: Create :one
+INSERT INTO panel_measurement_units (name)
+VALUES ($1)
+RETURNING *;
 
--- name: UpdateMeasurementUnit :exec
+-- name: UpdateByID :one
 UPDATE panel_measurement_units
 SET name = @name
-WHERE id = @id;
+WHERE id = @id
+RETURNING *;
 
--- name: GetMeasurementUnits :many
-SELECT id, name FROM panel_measurement_units WHERE language_id = (SELECT languages.id FROM languages WHERE label = $1);
+-- name: GetMany :many
+SELECT id, name
+FROM panel_measurement_units;
 
--- name: GetMeasurementUnit :one
-SELECT id, name FROM panel_measurement_units WHERE language_id = (SELECT languages.id FROM languages WHERE label = $1) AND panel_measurement_units.id = @id;
+-- name: GetByID :one
+SELECT id, name
+FROM panel_measurement_units
+WHERE panel_measurement_units.id = @id;
+
+-- name: DeleteByID :exec
+DELETE FROM panel_measurement_units
+WHERE panel_measurement_units.id = @id;

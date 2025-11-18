@@ -15,3 +15,10 @@ type Pet struct {
 	Passport pgtype.Text `json:"passport"`
 	Chip     pgtype.Text `json:"chip"`
 }
+
+type PetWeight struct {
+	ID           int32       `json:"id"`
+	Weight       float32     `json:"weight"`
+	DateMeasured pgtype.Date `json:"date_measured"`
+	PetID        int32       `json:"pet_id"`
+}

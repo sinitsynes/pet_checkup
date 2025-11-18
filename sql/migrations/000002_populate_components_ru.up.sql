@@ -1,200 +1,25 @@
 BEGIN;
 
 INSERT INTO
-    languages (name, label)
+    panel_measurement_units (name)
 VALUES
-    ('Русский', 'RU');
-
-INSERT INTO
-    panel_measurement_units (name, language_id)
-VALUES
-    (
-        'мкмоль/л',
-        (
-            SELECT
-                id
-            FROM
-                languages
-            WHERE
-                name = 'Русский'
-        )
-    ),
-    (
-        'ед/л',
-        (
-            SELECT
-                id
-            FROM
-                languages
-            WHERE
-                name = 'Русский'
-        )
-    ),
-    (
-        'расчетный показатель',
-        (
-            SELECT
-                id
-            FROM
-                languages
-            WHERE
-                name = 'Русский'
-        )
-    ),
-    (
-        'ммоль/л',
-        (
-            SELECT
-                id
-            FROM
-                languages
-            WHERE
-                name = 'Русский'
-        )
-    ),
-    (
-        'г/л',
-        (
-            SELECT
-                id
-            FROM
-                languages
-            WHERE
-                name = 'Русский'
-        )
-    ),
-    (
-        'ед.pH',
-        (
-            SELECT
-                id
-            FROM
-                languages
-            WHERE
-                name = 'Русский'
-        )
-    ),
-    (
-        'расчетный, г/л',
-        (
-            SELECT
-                id
-            FROM
-                languages
-            WHERE
-                name = 'Русский'
-        )
-    ),
-    (
-        'расчетный, ммоль/л',
-        (
-            SELECT
-                id
-            FROM
-                languages
-            WHERE
-                name = 'Русский'
-        )
-    ),
-    (
-        'расчетный, мг/дл',
-        (
-            SELECT
-                id
-            FROM
-                languages
-            WHERE
-                name = 'Русский'
-        )
-    ),
-    (
-        'x10^12/л',
-        (
-            SELECT
-                id
-            FROM
-                languages
-            WHERE
-                name = 'Русский'
-        )
-    ),
-    (
-        'x10^9/л',
-        (
-            SELECT
-                id
-            FROM
-                languages
-            WHERE
-                name = 'Русский'
-        )
-    ),
-    (
-        'мм/ч',
-        (
-            SELECT
-                id
-            FROM
-                languages
-            WHERE
-                name = 'Русский'
-        )
-    ),
-    (
-        'в п/зр (HPF)',
-        (
-            SELECT
-                id
-            FROM
-                languages
-            WHERE
-                name = 'Русский'
-        )
-    ),
-    (
-        'мкм^3 (фл)',
-        (
-            SELECT
-                id
-            FROM
-                languages
-            WHERE
-                name = 'Русский'
-        )
-    ),
-    (
-        'пг',
-        (
-            SELECT
-                id
-            FROM
-                languages
-            WHERE
-                name = 'Русский'
-        )
-    ),
-    (
-        'на 100 лейкоцитов',
-        (
-            SELECT
-                id
-            FROM
-                languages
-            WHERE
-                name = 'Русский'
-        )
-    ),
-    (
-        '%',
-        (
-            SELECT
-                id
-            FROM
-                languages
-            WHERE
-                name = 'Русский'
-        )
-    );
+    ('мкмоль/л'),
+    ('ед/л'),
+    ('расчетный показатель'),
+    ('ммоль/л'),
+    ('г/л'),
+    ('ед.pH'),
+    ('расчетный, г/л'),
+    ('расчетный, ммоль/л'),
+    ('расчетный, мг/дл'),
+    ('x10^12/л'),
+    ('x10^9/л'),
+    ('мм/ч'),
+    ('в п/зр (HPF)'),
+    ('мкм^3 (фл)'),
+    ('пг'),
+    ('на 100 лейкоцитов'),
+    ('%');
 
 INSERT INTO
     panel_components (
@@ -202,8 +27,7 @@ INSERT INTO
         unit_id,
         min_amount,
         max_amount,
-        comment,
-        language_id
+        comment
     )
 VALUES
     (
@@ -218,15 +42,7 @@ VALUES
         ),
         null,
         10.0,
-        null,
-        (
-            SELECT
-                id
-            FROM
-                languages
-            WHERE
-                name = 'Русский'
-        )
+        null
     ),
     (
         'Билирубин прямой (DBil)',
@@ -240,15 +56,7 @@ VALUES
         ),
         null,
         5.5,
-        null,
-        (
-            SELECT
-                id
-            FROM
-                languages
-            WHERE
-                name = 'Русский'
-        )
+        null
     ),
     (
         'АСТ (GOT)',
@@ -262,15 +70,7 @@ VALUES
         ),
         12,
         45,
-        'возраст старше 6 месяцев',
-        (
-            SELECT
-                id
-            FROM
-                languages
-            WHERE
-                name = 'Русский'
-        )
+        'возраст старше 6 месяцев'
     ),
     (
         'АЛТ (GPT)',
@@ -284,15 +84,7 @@ VALUES
         ),
         18,
         60,
-        null,
-        (
-            SELECT
-                id
-            FROM
-                languages
-            WHERE
-                name = 'Русский'
-        )
+        null
     ),
     (
         'Коэффициент Ритиса',
@@ -306,16 +98,7 @@ VALUES
         ),
         1.1,
         1.3,
-        null,
-        (
-            SELECT
-                id
-            FROM
-                languages
-            WHERE
-                name = 'Русский'
-        )
-    ),
+        null),
     (
         'Мочевина (Urea)',
         (
@@ -328,16 +111,7 @@ VALUES
         ),
         5.4,
         12.1,
-        null,
-        (
-            SELECT
-                id
-            FROM
-                languages
-            WHERE
-                name = 'Русский'
-        )
-    ),
+        null),
     (
         'Креатинин (Creat)',
         (
@@ -350,15 +124,7 @@ VALUES
         ),
         70,
         165,
-        null,
-        (
-            SELECT
-                id
-            FROM
-                languages
-            WHERE
-                name = 'Русский'
-        )
+        null
     ),
     (
         'Общий белок (Prot, total)',
@@ -372,16 +138,7 @@ VALUES
         ),
         54,
         78,
-        null,
-        (
-            SELECT
-                id
-            FROM
-                languages
-            WHERE
-                name = 'Русский'
-        )
-    ),
+        null),
     (
         'Альбумин (Alb)',
         (
@@ -394,15 +151,7 @@ VALUES
         ),
         24,
         38,
-        null,
-        (
-            SELECT
-                id
-            FROM
-                languages
-            WHERE
-                name = 'Русский'
-        )
+        null
     ),
     (
         'Щелочная фосфотаза (ALP, IFCC)',
@@ -416,15 +165,7 @@ VALUES
         ),
         null,
         55,
-        'возраст старше 6 месяцев',
-        (
-            SELECT
-                id
-            FROM
-                languages
-            WHERE
-                name = 'Русский'
-        )
+        'возраст старше 6 месяцев'
     ),
     (
         'Альфа-Амилаза, общая (ά-Amylase,total)',
@@ -438,15 +179,7 @@ VALUES
         ),
         500,
         1200,
-        null,
-        (
-            SELECT
-                id
-            FROM
-                languages
-            WHERE
-                name = 'Русский'
-        )
+        null
     ),
     (
         'Глюкоза (Glu)',
@@ -460,15 +193,7 @@ VALUES
         ),
         3.3,
         6.8,
-        null,
-        (
-            SELECT
-                id
-            FROM
-                languages
-            WHERE
-                name = 'Русский'
-        )
+        null
     ),
     (
         'ЛДГ (LDH, IFCC)',
@@ -482,15 +207,7 @@ VALUES
         ),
         35,
         500,
-        null,
-        (
-            SELECT
-                id
-            FROM
-                languages
-            WHERE
-                name = 'Русский'
-        )
+        null
     ),
     (
         'ГГТ (γ-GT)',
@@ -504,15 +221,7 @@ VALUES
         ),
         0,
         4,
-        null,
-        (
-            SELECT
-                id
-            FROM
-                languages
-            WHERE
-                name = 'Русский'
-        )
+        null
     ),
     (
         'Холестерин (Chol, total)',
@@ -526,15 +235,7 @@ VALUES
         ),
         1.90,
         3.90,
-        null,
-        (
-            SELECT
-                id
-            FROM
-                languages
-            WHERE
-                name = 'Русский'
-        )
+        null
     ),
     (
         'Триглицериды (Trig)',
@@ -548,15 +249,7 @@ VALUES
         ),
         0.38,
         1.10,
-        null,
-        (
-            SELECT
-                id
-            FROM
-                languages
-            WHERE
-                name = 'Русский'
-        )
+        null
     ),
     (
         'КФК (CK)',
@@ -570,15 +263,7 @@ VALUES
         ),
         150,
         350,
-        'возраст старше 12 месяцев',
-        (
-            SELECT
-                id
-            FROM
-                languages
-            WHERE
-                name = 'Русский'
-        )
+        'возраст старше 12 месяцев'
     ),
     (
         'Калий (Potassium)',
@@ -592,15 +277,7 @@ VALUES
         ),
         3.6,
         5.5,
-        null,
-        (
-            SELECT
-                id
-            FROM
-                languages
-            WHERE
-                name = 'Русский'
-        )
+        null
     ),
     (
         'Натрий (Sodium)',
@@ -614,15 +291,7 @@ VALUES
         ),
         144,
         158,
-        null,
-        (
-            SELECT
-                id
-            FROM
-                languages
-            WHERE
-                name = 'Русский'
-        )
+        null
     ),
     (
         'Фосфор (Phosphate, inorg)',
@@ -636,15 +305,7 @@ VALUES
         ),
         1.10,
         2.30,
-        'возраст старше 6 месяцев',
-        (
-            SELECT
-                id
-            FROM
-                languages
-            WHERE
-                name = 'Русский'
-        )
+        'возраст старше 6 месяцев'
     ),
     (
         'Кальций общий (Ca, total)',
@@ -658,15 +319,7 @@ VALUES
         ),
         2.00,
         2.70,
-        null,
-        (
-            SELECT
-                id
-            FROM
-                languages
-            WHERE
-                name = 'Русский'
-        )
+        null
     ),
     (
         'Железо (Fe)',
@@ -680,15 +333,7 @@ VALUES
         ),
         12.0,
         39.0,
-        null,
-        (
-            SELECT
-                id
-            FROM
-                languages
-            WHERE
-                name = 'Русский'
-        )
+        null
     ),
     (
         'Магний (Mg)',
@@ -702,15 +347,7 @@ VALUES
         ),
         0.8,
         1.2,
-        null,
-        (
-            SELECT
-                id
-            FROM
-                languages
-            WHERE
-                name = 'Русский'
-        )
+        null
     ),
     (
         'Хлор (Chloride)',
@@ -724,15 +361,7 @@ VALUES
         ),
         107,
         129,
-        null,
-        (
-            SELECT
-                id
-            FROM
-                languages
-            WHERE
-                name = 'Русский'
-        )
+        null
     ),
     (
         'Кислотность (pH)',
@@ -746,15 +375,7 @@ VALUES
         ),
         7.35,
         7.50,
-        null,
-        (
-            SELECT
-                id
-            FROM
-                languages
-            WHERE
-                name = 'Русский'
-        )
+        null
     ),
     (
         'Альбумин/глобулин (A/G ratio)',
@@ -768,15 +389,7 @@ VALUES
         ),
         0.7,
         1.4,
-        null,
-        (
-            SELECT
-                id
-            FROM
-                languages
-            WHERE
-                name = 'Русский'
-        )
+        null
     ),
     (
         'Глобулин (Glob)',
@@ -790,15 +403,7 @@ VALUES
         ),
         29,
         55,
-        null,
-        (
-            SELECT
-                id
-            FROM
-                languages
-            WHERE
-                name = 'Русский'
-        )
+        null
     ),
     (
         'Соотношение Ca/P',
@@ -812,15 +417,7 @@ VALUES
         ),
         1.6,
         2.3,
-        'возраст старше 10 месяцев',
-        (
-            SELECT
-                id
-            FROM
-                languages
-            WHERE
-                name = 'Русский'
-        )
+        'возраст старше 10 месяцев'
     ),
     (
         'Соотношение Na/K',
@@ -834,15 +431,7 @@ VALUES
         ),
         26,
         55,
-        null,
-        (
-            SELECT
-                id
-            FROM
-                languages
-            WHERE
-                name = 'Русский'
-        )
+        null
     ),
     (
         'Соотношение Мочевина/Креатинин (B/C ratio)',
@@ -856,15 +445,7 @@ VALUES
         ),
         null,
         null,
-        'при азотемии: > 30 пре-/постренальная; <20 ренальная А.  или другая причина',
-        (
-            SELECT
-                id
-            FROM
-                languages
-            WHERE
-                name = 'Русский'
-        )
+        'при азотемии: > 30 пре-/постренальная; <20 ренальная А.  или другая причина'
     ),
     (
         'Гематокрит (Hct, PCV)',
@@ -878,15 +459,7 @@ VALUES
         ),
         29,
         48,
-        null,
-        (
-            SELECT
-                id
-            FROM
-                languages
-            WHERE
-                name = 'Русский'
-        )
+        null
     ),
     (
         'Гемоглобин (Hgb)',
@@ -900,15 +473,7 @@ VALUES
         ),
         90,
         150,
-        null,
-        (
-            SELECT
-                id
-            FROM
-                languages
-            WHERE
-                name = 'Русский'
-        )
+        null
     ),
     (
         'Эритроциты (RBC)',
@@ -922,15 +487,7 @@ VALUES
         ),
         5.6,
         10.0,
-        null,
-        (
-            SELECT
-                id
-            FROM
-                languages
-            WHERE
-                name = 'Русский'
-        )
+        null
     ),
     (
         'Лейкоциты (WBC)',
@@ -944,15 +501,7 @@ VALUES
         ),
         5.5,
         18.5,
-        null,
-        (
-            SELECT
-                id
-            FROM
-                languages
-            WHERE
-                name = 'Русский'
-        )
+        null
     ),
     (
         'Бластные клетки',
@@ -966,15 +515,7 @@ VALUES
         ),
         0,
         0,
-        null,
-        (
-            SELECT
-                id
-            FROM
-                languages
-            WHERE
-                name = 'Русский'
-        )
+        null
     ),
     (
         'Миелоциты',
@@ -988,15 +529,7 @@ VALUES
         ),
         0,
         0,
-        null,
-        (
-            SELECT
-                id
-            FROM
-                languages
-            WHERE
-                name = 'Русский'
-        )
+        null
     ),
     (
         'Метамиелоциты',
@@ -1010,15 +543,7 @@ VALUES
         ),
         0,
         0,
-        null,
-        (
-            SELECT
-                id
-            FROM
-                languages
-            WHERE
-                name = 'Русский'
-        )
+        null
     ),
     (
         'Палочкоядные нейтрофилы (Bands)',
@@ -1032,15 +557,7 @@ VALUES
         ),
         0,
         3,
-        null,
-        (
-            SELECT
-                id
-            FROM
-                languages
-            WHERE
-                name = 'Русский'
-        )
+        null
     ),
     (
         'Сегментоядерные нейтрофилы (Segs)',
@@ -1054,15 +571,7 @@ VALUES
         ),
         35,
         75,
-        null,
-        (
-            SELECT
-                id
-            FROM
-                languages
-            WHERE
-                name = 'Русский'
-        )
+        null
     ),
     (
         'Эозинофилы (Eos)',
@@ -1076,15 +585,7 @@ VALUES
         ),
         0,
         6,
-        null,
-        (
-            SELECT
-                id
-            FROM
-                languages
-            WHERE
-                name = 'Русский'
-        )
+        null
     ),
     (
         'Моноциты',
@@ -1098,15 +599,7 @@ VALUES
         ),
         1,
         4,
-        null,
-        (
-            SELECT
-                id
-            FROM
-                languages
-            WHERE
-                name = 'Русский'
-        )
+        null
     ),
     (
         'Базофилы (Bas)',
@@ -1120,15 +613,7 @@ VALUES
         ),
         0,
         1,
-        null,
-        (
-            SELECT
-                id
-            FROM
-                languages
-            WHERE
-                name = 'Русский'
-        )
+        null
     ),
     (
         'Лимфоциты (Lym)',
@@ -1142,15 +627,7 @@ VALUES
         ),
         25,
         55,
-        null,
-        (
-            SELECT
-                id
-            FROM
-                languages
-            WHERE
-                name = 'Русский'
-        )
+        null
     ),
     (
         'Тромбоциты (Plt)',
@@ -1164,15 +641,7 @@ VALUES
         ),
         160,
         630,
-        null,
-        (
-            SELECT
-                id
-            FROM
-                languages
-            WHERE
-                name = 'Русский'
-        )
+        null
     ),
     (
         'Количество тромбоцитов в п/зр',
@@ -1186,15 +655,7 @@ VALUES
         ),
         8,
         30,
-        null,
-        (
-            SELECT
-                id
-            FROM
-                languages
-            WHERE
-                name = 'Русский'
-        )
+        null
     ),
     (
         'СОЭ',
@@ -1208,15 +669,7 @@ VALUES
         ),
         1,
         13,
-        null,
-        (
-            SELECT
-                id
-            FROM
-                languages
-            WHERE
-                name = 'Русский'
-        )
+        null
     ),
     (
         'Количество тромбоцитов в п/зр',
@@ -1230,15 +683,7 @@ VALUES
         ),
         8,
         30,
-        null,
-        (
-            SELECT
-                id
-            FROM
-                languages
-            WHERE
-                name = 'Русский'
-        )
+        null
     ),
     (
         'Ядерные эритроциты (нормобласты, nRBC)',
@@ -1252,15 +697,7 @@ VALUES
         ),
         0,
         0,
-        null,
-        (
-            SELECT
-                id
-            FROM
-                languages
-            WHERE
-                name = 'Русский'
-        )
+        null
     ),
     (
         'Анизоцитоз эритроцитов (RDW)',
@@ -1274,15 +711,7 @@ VALUES
         ),
         null,
         22,
-        null,
-        (
-            SELECT
-                id
-            FROM
-                languages
-            WHERE
-                name = 'Русский'
-        )
+        null
     ),
     (
         'Средняя конц. Hb в эритроците (MCHC)',
@@ -1296,15 +725,7 @@ VALUES
         ),
         29,
         36,
-        null,
-        (
-            SELECT
-                id
-            FROM
-                languages
-            WHERE
-                name = 'Русский'
-        )
+        null
     ),
     (
         'Средний объем эритроцита (MCV)',
@@ -1318,15 +739,7 @@ VALUES
         ),
         39,
         53,
-        null,
-        (
-            SELECT
-                id
-            FROM
-                languages
-            WHERE
-                name = 'Русский'
-        )
+        null
     ),
     (
         'Сред содержание Hb в эритроците (MCH)',
@@ -1340,15 +753,7 @@ VALUES
         ),
         12.5,
         17.5,
-        null,
-        (
-            SELECT
-                id
-            FROM
-                languages
-            WHERE
-                name = 'Русский'
-        )
+        null
     ),
     (
         'Скорректир (истинные) лейкоциты',
@@ -1362,15 +767,7 @@ VALUES
         ),
         6.5,
         6.5,
-        null,
-        (
-            SELECT
-                id
-            FROM
-                languages
-            WHERE
-                name = 'Русский'
-        )
+        null
     ),
     (
         'Палочкоядерные нейтрофилы ABS',
@@ -1384,15 +781,7 @@ VALUES
         ),
         0,
         0.3,
-        null,
-        (
-            SELECT
-                id
-            FROM
-                languages
-            WHERE
-                name = 'Русский'
-        )
+        null
     ),
     (
         'Сегментоядерные нейтрофилы ABS',
@@ -1406,15 +795,7 @@ VALUES
         ),
         2.5,
         12.50,
-        null,
-        (
-            SELECT
-                id
-            FROM
-                languages
-            WHERE
-                name = 'Русский'
-        )
+        null
     ),
     (
         'Эозинофилы ABS',
@@ -1428,15 +809,7 @@ VALUES
         ),
         0.1,
         1.5,
-        null,
-        (
-            SELECT
-                id
-            FROM
-                languages
-            WHERE
-                name = 'Русский'
-        )
+        null
     ),
     (
         'Базофилы ABS',
@@ -1450,15 +823,7 @@ VALUES
         ),
         0,
         0.1,
-        null,
-        (
-            SELECT
-                id
-            FROM
-                languages
-            WHERE
-                name = 'Русский'
-        )
+        null
     ),
     (
         'Моноциты ABS',
@@ -1472,15 +837,7 @@ VALUES
         ),
         0,
         0.9,
-        null,
-        (
-            SELECT
-                id
-            FROM
-                languages
-            WHERE
-                name = 'Русский'
-        )
+        null
     ),
     (
         'Лимфоциты ABS',
@@ -1494,15 +851,7 @@ VALUES
         ),
         1.5,
         7,
-        null,
-        (
-            SELECT
-                id
-            FROM
-                languages
-            WHERE
-                name = 'Русский'
-        )
+        null
     ),
     (
         'Бластные клетки ABS',
@@ -1516,15 +865,7 @@ VALUES
         ),
         0,
         0,
-        null,
-        (
-            SELECT
-                id
-            FROM
-                languages
-            WHERE
-                name = 'Русский'
-        )
+        null
     );
 
 COMMIT;

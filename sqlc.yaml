@@ -1,21 +1,9 @@
 version: "2"
 
 sql:
-  - name: language
-    schema: sql/migrations
-    queries: sql/queries/language.sql
-    engine: postgresql
-    gen:
-      go:
-        package: language
-        out: internal/repository/language
-        emit_json_tags: true
-        sql_package: pgx/v5
-        omit_unused_structs: true
-
   - name: pet
     schema: sql/migrations
-    queries: sql/queries/pet.sql
+    queries: sql/queries/pet
     engine: postgresql
     gen:
       go:
@@ -25,14 +13,26 @@ sql:
         sql_package: pgx/v5
         omit_unused_structs: true
 
-  - name: panel
+  - name: measurement_units
     schema: sql/migrations
-    queries: sql/queries/panel
+    queries: sql/queries/panel/measurement_units.sql
     engine: postgresql
     gen:
       go:
-        package: panel
-        out: internal/repository/panel
+        package: measurement_units
+        out: internal/repository/measurement_units
+        emit_json_tags: true
+        sql_package: pgx/v5
+        omit_unused_structs: true
+
+  - name: panel_components
+    schema: sql/migrations
+    queries: sql/queries/panel/components.sql
+    engine: postgresql
+    gen:
+      go:
+        package: panel_components
+        out: internal/repository/components
         emit_json_tags: true
         sql_package: pgx/v5
         omit_unused_structs: true

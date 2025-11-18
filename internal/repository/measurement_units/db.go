@@ -2,7 +2,7 @@
 // versions:
 //   sqlc v1.26.0
 
-package panel
+package measurement_units
 
 import (
 	"context"

@@ -12,8 +12,12 @@ func PetRouter(DbPool *pgxpool.Pool) http.Handler {
 	queries := db.New(DbPool)
 	petHandler := handler.NewPetHandler(queries)
 
-	return MakeCRUDRouter(RouteConfig{
+	router := MakeCRUDRouter(RouteConfig{
 		BasePath: "/pets",
 		Handler:  petHandler,
 	})
+	router.Handle("POST /pets/{id}/weight", petHandler.AddWeight())
+	router.Handle("GET /pets/{id}/weight", petHandler.GetPetWeights())
+	router.Handle("DELETE /pets/{id}/weight", petHandler.DeleteWeight())
+	return router
 }

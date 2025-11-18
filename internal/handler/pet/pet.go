@@ -15,10 +15,10 @@ func NewPetHandler(queries *pet.Queries) *PetHandler {
 	return &PetHandler{Queries: queries}
 }
 
-func (handler *PetHandler) GetAll() http.Handler {
+func (handler *PetHandler) GetMany() http.Handler {
 	return http.HandlerFunc(
 		func(w http.ResponseWriter, r *http.Request) {
-			pets, repoErr := handler.Queries.GetAll(r.Context())
+			pets, repoErr := handler.Queries.GetMany(r.Context())
 			if repoErr != nil {
 				http.Error(w, repoErr.Error(), http.StatusInternalServerError)
 				return
@@ -118,5 +118,72 @@ func (handler *PetHandler) DeleteByID() http.Handler {
 				return
 			}
 			w.WriteHeader(http.StatusNoContent)
+		})
+}
+
+func (handler *PetHandler) AddWeight() http.Handler {
+	return http.HandlerFunc(
+		func(w http.ResponseWriter, r *http.Request) {
+			petID, err := common.ExtractID(r)
+			if err != nil {
+				http.Error(w, err.Error(), http.StatusBadRequest)
+				return
+			}
+			weight, decodeErr := common.Decode[pet.AddWeightMeasurementParams](r)
+			if decodeErr != nil {
+				http.Error(w, decodeErr.Error(), http.StatusBadRequest)
+				return
+			}
+			weight.PetID = petID
+			updated, repoErr := handler.Queries.AddWeightMeasurement(r.Context(), weight)
+			if repoErr != nil {
+				http.Error(w, repoErr.Error(), http.StatusInternalServerError)
+				return
+			}
+			err = common.Encode(w, r, http.StatusOK, updated)
+			if err != nil {
+				http.Error(w, err.Error(), http.StatusInternalServerError)
+				slog.Error("Encoding Err", "err", err.Error())
+				return
+			}
+		})
+}
+
+func (handler *PetHandler) DeleteWeight() http.Handler {
+	return http.HandlerFunc(
+		func(w http.ResponseWriter, r *http.Request) {
+			id, err := common.ExtractID(r)
+			if err != nil {
+				http.Error(w, err.Error(), http.StatusBadRequest)
+				return
+			}
+			repoErr := handler.Queries.DeleteWeightMeasurement(r.Context(), id)
+			if repoErr != nil {
+				http.Error(w, repoErr.Error(), http.StatusInternalServerError)
+				return
+			}
+			w.WriteHeader(http.StatusNoContent)
+		})
+}
+
+func (handler *PetHandler) GetPetWeights() http.Handler {
+	return http.HandlerFunc(
+		func(w http.ResponseWriter, r *http.Request) {
+			petID, err := common.ExtractID(r)
+			if err != nil {
+				http.Error(w, err.Error(), http.StatusBadRequest)
+				return
+			}
+			weights, repoErr := handler.Queries.GetManyWeightMeasurements(r.Context(), petID)
+			if repoErr != nil {
+				http.Error(w, repoErr.Error(), http.StatusInternalServerError)
+				return
+			}
+			err = common.Encode(w, r, http.StatusOK, weights)
+			if err != nil {
+				http.Error(w, err.Error(), http.StatusInternalServerError)
+				slog.Error("Encoding Err", "err", err.Error())
+				return
+			}
 		})
 }
