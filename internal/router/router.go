@@ -2,6 +2,7 @@ package router
 
 import (
 	"net/http"
+	"pet_checkup/internal/middleware"
 
 	"github.com/jackc/pgx/v5/pgxpool"
 )
@@ -13,5 +14,9 @@ func BaseRouter(DbPool *pgxpool.Pool) http.Handler {
 	apiMux.Handle("/", PetRouter(DbPool))
 
 	mux.Handle("/api/", http.StripPrefix("/api", apiMux))
-	return mux
+
+	return middleware.Chain(
+		mux,
+		middleware.StripTrailingSlash,
+		middleware.LogRequest)
 }
