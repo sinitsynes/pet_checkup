@@ -2,3 +2,5 @@
 .env
 .env.test
 .zed/
+
+.DS_Store
