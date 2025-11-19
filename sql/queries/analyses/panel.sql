@@ -15,6 +15,15 @@ DELETE FROM panel
 WHERE id = $1;
 
 -- name: GetByID :one
-SELECT * FROM panel
-JOIN component ON panel.id = component.panel_id
-WHERE panel.id = $1;
+SELECT panel.id,
+       panel.name,
+       panel.description,
+       array_agg(
+        json_build_object('id', component.id,
+                          'name', component.name,
+                          'description', component.description)) as components
+FROM panel
+JOIN panel_component ON panel.id = panel_component.panel_id
+JOIN component ON panel_component.component_id = component.id
+WHERE panel.id = $1
+GROUP BY panel.id, panel.name, panel.description;

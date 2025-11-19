@@ -46,23 +46,25 @@ func (q *Queries) DeleteByID(ctx context.Context, id int32) error {
 }
 
 const getByID = `-- name: GetByID :one
-SELECT panel.id, panel.name, description, created_at, updated_at, component.id, component.name, unit_id, min_amount, max_amount, comment FROM panel
-JOIN component ON panel.id = component.panel_id
+SELECT panel.id,
+       panel.name,
+       panel.description,
+       array_agg(
+        json_build_object('id', component.id,
+                          'name', component.name,
+                          'description', component.description)) as components
+FROM panel
+JOIN panel_component ON panel.id = panel_component.panel_id
+JOIN component ON panel_component.component_id = component.id
 WHERE panel.id = $1
+GROUP BY panel.id, panel.name, panel.description
 `
 
 type GetByIDRow struct {
-	ID          int32            `json:"id"`
-	Name        string           `json:"name"`
-	Description pgtype.Text      `json:"description"`
-	CreatedAt   pgtype.Timestamp `json:"created_at"`
-	UpdatedAt   pgtype.Timestamp `json:"updated_at"`
-	ID_2        int32            `json:"id_2"`
-	Name_2      string           `json:"name_2"`
-	UnitID      pgtype.Int4      `json:"unit_id"`
-	MinAmount   pgtype.Float4    `json:"min_amount"`
-	MaxAmount   pgtype.Float4    `json:"max_amount"`
-	Comment     pgtype.Text      `json:"comment"`
+	ID          int32       `json:"id"`
+	Name        string      `json:"name"`
+	Description pgtype.Text `json:"description"`
+	Components  interface{} `json:"components"`
 }
 
 func (q *Queries) GetByID(ctx context.Context, id int32) (GetByIDRow, error) {
@@ -72,14 +74,7 @@ func (q *Queries) GetByID(ctx context.Context, id int32) (GetByIDRow, error) {
 		&i.ID,
 		&i.Name,
 		&i.Description,
-		&i.CreatedAt,
-		&i.UpdatedAt,
-		&i.ID_2,
-		&i.Name_2,
-		&i.UnitID,
-		&i.MinAmount,
-		&i.MaxAmount,
-		&i.Comment,
+		&i.Components,
 	)
 	return i, err
 }
