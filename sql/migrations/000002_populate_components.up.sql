@@ -1,7 +1,7 @@
 BEGIN;
 
 INSERT INTO
-    panel_measurement_units (name)
+    measurement_unit (name)
 VALUES
     ('мкмоль/л'),
     ('ед/л'),
@@ -22,7 +22,7 @@ VALUES
     ('%');
 
 INSERT INTO
-    panel_components (
+    component (
         name,
         unit_id,
         min_amount,
@@ -36,7 +36,7 @@ VALUES
             SELECT
                 id
             FROM
-                panel_measurement_units
+                measurement_unit
             WHERE
                 name = 'мкмоль/л'
         ),
@@ -50,7 +50,7 @@ VALUES
             SELECT
                 id
             FROM
-                panel_measurement_units
+                measurement_unit
             WHERE
                 name = 'мкмоль/л'
         ),
@@ -64,7 +64,7 @@ VALUES
             SELECT
                 id
             FROM
-                panel_measurement_units
+                measurement_unit
             WHERE
                 name = 'ед/л'
         ),
@@ -78,7 +78,7 @@ VALUES
             SELECT
                 id
             FROM
-                panel_measurement_units
+                measurement_unit
             WHERE
                 name = 'ед/л'
         ),
@@ -92,7 +92,7 @@ VALUES
             SELECT
                 id
             FROM
-                panel_measurement_units
+                measurement_unit
             WHERE
                 name = 'расчетный показатель'
         ),
@@ -105,7 +105,7 @@ VALUES
             SELECT
                 id
             FROM
-                panel_measurement_units
+                measurement_unit
             WHERE
                 name = 'ммоль/л'
         ),
@@ -118,7 +118,7 @@ VALUES
             SELECT
                 id
             FROM
-                panel_measurement_units
+                measurement_unit
             WHERE
                 name = 'мкмоль/л'
         ),
@@ -132,7 +132,7 @@ VALUES
             SELECT
                 id
             FROM
-                panel_measurement_units
+                measurement_unit
             WHERE
                 name = 'г/л'
         ),
@@ -145,7 +145,7 @@ VALUES
             SELECT
                 id
             FROM
-                panel_measurement_units
+                measurement_unit
             WHERE
                 name = 'г/л'
         ),
@@ -159,7 +159,7 @@ VALUES
             SELECT
                 id
             FROM
-                panel_measurement_units
+                measurement_unit
             WHERE
                 name = 'г/л'
         ),
@@ -173,7 +173,7 @@ VALUES
             SELECT
                 id
             FROM
-                panel_measurement_units
+                measurement_unit
             WHERE
                 name = 'г/л'
         ),
@@ -187,7 +187,7 @@ VALUES
             SELECT
                 id
             FROM
-                panel_measurement_units
+                measurement_unit
             WHERE
                 name = 'ммоль/л'
         ),
@@ -201,7 +201,7 @@ VALUES
             SELECT
                 id
             FROM
-                panel_measurement_units
+                measurement_unit
             WHERE
                 name = 'ед/л'
         ),
@@ -215,7 +215,7 @@ VALUES
             SELECT
                 id
             FROM
-                panel_measurement_units
+                measurement_unit
             WHERE
                 name = 'ед/л'
         ),
@@ -229,7 +229,7 @@ VALUES
             SELECT
                 id
             FROM
-                panel_measurement_units
+                measurement_unit
             WHERE
                 name = 'ммоль/л'
         ),
@@ -243,7 +243,7 @@ VALUES
             SELECT
                 id
             FROM
-                panel_measurement_units
+                measurement_unit
             WHERE
                 name = 'ммоль/л'
         ),
@@ -257,7 +257,7 @@ VALUES
             SELECT
                 id
             FROM
-                panel_measurement_units
+                measurement_unit
             WHERE
                 name = 'ед/л'
         ),
@@ -271,7 +271,7 @@ VALUES
             SELECT
                 id
             FROM
-                panel_measurement_units
+                measurement_unit
             WHERE
                 name = 'ммоль/л'
         ),
@@ -285,7 +285,7 @@ VALUES
             SELECT
                 id
             FROM
-                panel_measurement_units
+                measurement_unit
             WHERE
                 name = 'ммоль/л'
         ),
@@ -299,7 +299,7 @@ VALUES
             SELECT
                 id
             FROM
-                panel_measurement_units
+                measurement_unit
             WHERE
                 name = 'ммоль/л'
         ),
@@ -313,7 +313,7 @@ VALUES
             SELECT
                 id
             FROM
-                panel_measurement_units
+                measurement_unit
             WHERE
                 name = 'ммоль/л'
         ),
@@ -327,7 +327,7 @@ VALUES
             SELECT
                 id
             FROM
-                panel_measurement_units
+                measurement_unit
             WHERE
                 name = 'мкмоль/л'
         ),
@@ -341,7 +341,7 @@ VALUES
             SELECT
                 id
             FROM
-                panel_measurement_units
+                measurement_unit
             WHERE
                 name = 'ммоль/л'
         ),
@@ -355,7 +355,7 @@ VALUES
             SELECT
                 id
             FROM
-                panel_measurement_units
+                measurement_unit
             WHERE
                 name = 'ммоль/л'
         ),
@@ -369,7 +369,7 @@ VALUES
             SELECT
                 id
             FROM
-                panel_measurement_units
+                measurement_unit
             WHERE
                 name = 'ед.pH'
         ),
@@ -383,7 +383,7 @@ VALUES
             SELECT
                 id
             FROM
-                panel_measurement_units
+                measurement_unit
             WHERE
                 name = 'расчетный, г/л'
         ),
@@ -397,7 +397,7 @@ VALUES
             SELECT
                 id
             FROM
-                panel_measurement_units
+                measurement_unit
             WHERE
                 name = 'г/л'
         ),
@@ -411,7 +411,7 @@ VALUES
             SELECT
                 id
             FROM
-                panel_measurement_units
+                measurement_unit
             WHERE
                 name = 'расчетный, ммоль/л'
         ),
@@ -425,7 +425,7 @@ VALUES
             SELECT
                 id
             FROM
-                panel_measurement_units
+                measurement_unit
             WHERE
                 name = 'расчетный, ммоль/л'
         ),
@@ -439,7 +439,7 @@ VALUES
             SELECT
                 id
             FROM
-                panel_measurement_units
+                measurement_unit
             WHERE
                 name = 'расчетный, мг/дл'
         ),
@@ -453,7 +453,7 @@ VALUES
             SELECT
                 id
             FROM
-                panel_measurement_units
+                measurement_unit
             WHERE
                 name = '%'
         ),
@@ -467,7 +467,7 @@ VALUES
             SELECT
                 id
             FROM
-                panel_measurement_units
+                measurement_unit
             WHERE
                 name = 'г/л'
         ),
@@ -481,7 +481,7 @@ VALUES
             SELECT
                 id
             FROM
-                panel_measurement_units
+                measurement_unit
             WHERE
                 name = 'x10^12/л'
         ),
@@ -495,7 +495,7 @@ VALUES
             SELECT
                 id
             FROM
-                panel_measurement_units
+                measurement_unit
             WHERE
                 name = 'x10^9/л'
         ),
@@ -509,7 +509,7 @@ VALUES
             SELECT
                 id
             FROM
-                panel_measurement_units
+                measurement_unit
             WHERE
                 name = '%'
         ),
@@ -523,7 +523,7 @@ VALUES
             SELECT
                 id
             FROM
-                panel_measurement_units
+                measurement_unit
             WHERE
                 name = '%'
         ),
@@ -537,7 +537,7 @@ VALUES
             SELECT
                 id
             FROM
-                panel_measurement_units
+                measurement_unit
             WHERE
                 name = '%'
         ),
@@ -551,7 +551,7 @@ VALUES
             SELECT
                 id
             FROM
-                panel_measurement_units
+                measurement_unit
             WHERE
                 name = '%'
         ),
@@ -565,7 +565,7 @@ VALUES
             SELECT
                 id
             FROM
-                panel_measurement_units
+                measurement_unit
             WHERE
                 name = '%'
         ),
@@ -579,7 +579,7 @@ VALUES
             SELECT
                 id
             FROM
-                panel_measurement_units
+                measurement_unit
             WHERE
                 name = '%'
         ),
@@ -593,7 +593,7 @@ VALUES
             SELECT
                 id
             FROM
-                panel_measurement_units
+                measurement_unit
             WHERE
                 name = '%'
         ),
@@ -607,7 +607,7 @@ VALUES
             SELECT
                 id
             FROM
-                panel_measurement_units
+                measurement_unit
             WHERE
                 name = '%'
         ),
@@ -621,7 +621,7 @@ VALUES
             SELECT
                 id
             FROM
-                panel_measurement_units
+                measurement_unit
             WHERE
                 name = '%'
         ),
@@ -635,7 +635,7 @@ VALUES
             SELECT
                 id
             FROM
-                panel_measurement_units
+                measurement_unit
             WHERE
                 name = 'x10^9/л'
         ),
@@ -649,7 +649,7 @@ VALUES
             SELECT
                 id
             FROM
-                panel_measurement_units
+                measurement_unit
             WHERE
                 name = 'в п/зр (HPF)'
         ),
@@ -663,7 +663,7 @@ VALUES
             SELECT
                 id
             FROM
-                panel_measurement_units
+                measurement_unit
             WHERE
                 name = 'мм/ч'
         ),
@@ -677,7 +677,7 @@ VALUES
             SELECT
                 id
             FROM
-                panel_measurement_units
+                measurement_unit
             WHERE
                 name = 'в п/зр (HPF)'
         ),
@@ -691,7 +691,7 @@ VALUES
             SELECT
                 id
             FROM
-                panel_measurement_units
+                measurement_unit
             WHERE
                 name = 'на 100 лейкоцитов'
         ),
@@ -705,7 +705,7 @@ VALUES
             SELECT
                 id
             FROM
-                panel_measurement_units
+                measurement_unit
             WHERE
                 name = '%'
         ),
@@ -719,7 +719,7 @@ VALUES
             SELECT
                 id
             FROM
-                panel_measurement_units
+                measurement_unit
             WHERE
                 name = '%'
         ),
@@ -733,7 +733,7 @@ VALUES
             SELECT
                 id
             FROM
-                panel_measurement_units
+                measurement_unit
             WHERE
                 name = 'мкм^3 (фл)'
         ),
@@ -747,7 +747,7 @@ VALUES
             SELECT
                 id
             FROM
-                panel_measurement_units
+                measurement_unit
             WHERE
                 name = 'пг'
         ),
@@ -761,7 +761,7 @@ VALUES
             SELECT
                 id
             FROM
-                panel_measurement_units
+                measurement_unit
             WHERE
                 name = 'x10^9/л'
         ),
@@ -775,7 +775,7 @@ VALUES
             SELECT
                 id
             FROM
-                panel_measurement_units
+                measurement_unit
             WHERE
                 name = 'x10^9/л'
         ),
@@ -789,7 +789,7 @@ VALUES
             SELECT
                 id
             FROM
-                panel_measurement_units
+                measurement_unit
             WHERE
                 name = 'x10^9/л'
         ),
@@ -803,7 +803,7 @@ VALUES
             SELECT
                 id
             FROM
-                panel_measurement_units
+                measurement_unit
             WHERE
                 name = 'x10^9/л'
         ),
@@ -817,7 +817,7 @@ VALUES
             SELECT
                 id
             FROM
-                panel_measurement_units
+                measurement_unit
             WHERE
                 name = 'x10^9/л'
         ),
@@ -831,7 +831,7 @@ VALUES
             SELECT
                 id
             FROM
-                panel_measurement_units
+                measurement_unit
             WHERE
                 name = 'x10^9/л'
         ),
@@ -845,7 +845,7 @@ VALUES
             SELECT
                 id
             FROM
-                panel_measurement_units
+                measurement_unit
             WHERE
                 name = 'x10^9/л'
         ),
@@ -859,7 +859,7 @@ VALUES
             SELECT
                 id
             FROM
-                panel_measurement_units
+                measurement_unit
             WHERE
                 name = 'x10^9/л'
         ),

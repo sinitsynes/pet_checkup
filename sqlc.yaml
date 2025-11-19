@@ -15,24 +15,48 @@ sql:
 
   - name: measurement_units
     schema: sql/migrations
-    queries: sql/queries/panel/measurement_units.sql
+    queries: sql/queries/analyses/measurement_unit.sql
     engine: postgresql
     gen:
       go:
-        package: measurement_units
-        out: internal/repository/measurement_units
+        package: measurement_unit
+        out: internal/repository/analyses/measurement_unit
         emit_json_tags: true
         sql_package: pgx/v5
         omit_unused_structs: true
 
-  - name: panel_components
+  - name: component
     schema: sql/migrations
-    queries: sql/queries/panel/components.sql
+    queries: sql/queries/analyses/component.sql
     engine: postgresql
     gen:
       go:
-        package: panel_components
-        out: internal/repository/components
+        package: component
+        out: internal/repository/analyses/components
+        emit_json_tags: true
+        sql_package: pgx/v5
+        omit_unused_structs: true
+
+  - name: panel
+    schema: sql/migrations
+    queries: sql/queries/analyses/panel.sql
+    engine: postgresql
+    gen:
+      go:
+        package: panel
+        out: internal/repository/analyses/panel
+        emit_json_tags: true
+        sql_package: pgx/v5
+        omit_unused_structs: true
+
+  - name: panel_component
+    schema: sql/migrations
+    queries: sql/queries/analyses/panel_component.sql
+    engine: postgresql
+    gen:
+      go:
+        package: panel_component
+        out: internal/repository/analyses/panel_component
         emit_json_tags: true
         sql_package: pgx/v5
         omit_unused_structs: true

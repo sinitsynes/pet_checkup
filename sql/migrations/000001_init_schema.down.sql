@@ -1,5 +1,6 @@
+DROP TABLE panel_component;
+DROP TABLE panel;
 DROP TABLE pet_weight;
-DROP TABLE panel_measurements;
-DROP TABLE pets;
-DROP TABLE panel_components;
-DROP TABLE panel_measurement_units;
+DROP TABLE pet;
+DROP TABLE component;
+DROP TABLE measurement_unit;

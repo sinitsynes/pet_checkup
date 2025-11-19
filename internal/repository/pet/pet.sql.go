@@ -12,7 +12,7 @@ import (
 )
 
 const create = `-- name: Create :one
-INSERT INTO pets (name, birth, passport, chip)
+INSERT INTO pet (name, birth, passport, chip)
 VALUES ($1, $2, $3, $4)
 RETURNING id, name, birth, passport, chip
 `
@@ -43,7 +43,7 @@ func (q *Queries) Create(ctx context.Context, arg CreateParams) (Pet, error) {
 }
 
 const deleteByID = `-- name: DeleteByID :exec
-DELETE FROM pets WHERE id = $1
+DELETE FROM pet WHERE id = $1
 `
 
 func (q *Queries) DeleteByID(ctx context.Context, id int32) error {
@@ -52,7 +52,7 @@ func (q *Queries) DeleteByID(ctx context.Context, id int32) error {
 }
 
 const getByID = `-- name: GetByID :one
-SELECT id, name, birth, passport, chip FROM pets WHERE id = $1
+SELECT id, name, birth, passport, chip FROM pet WHERE id = $1
 `
 
 func (q *Queries) GetByID(ctx context.Context, id int32) (Pet, error) {
@@ -69,7 +69,7 @@ func (q *Queries) GetByID(ctx context.Context, id int32) (Pet, error) {
 }
 
 const getMany = `-- name: GetMany :many
-SELECT id, name, birth, passport, chip FROM pets
+SELECT id, name, birth, passport, chip FROM pet
 `
 
 func (q *Queries) GetMany(ctx context.Context) ([]Pet, error) {
@@ -99,7 +99,7 @@ func (q *Queries) GetMany(ctx context.Context) ([]Pet, error) {
 }
 
 const updateByID = `-- name: UpdateByID :one
-UPDATE pets SET
+UPDATE pet SET
     name = coalesce($1, name),
     birth = coalesce($2, birth),
     passport = coalesce($3, passport),

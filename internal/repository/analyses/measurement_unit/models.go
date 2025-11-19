@@ -2,9 +2,9 @@
 // versions:
 //   sqlc v1.26.0
 
-package measurement_units
+package measurement_unit
 
-type PanelMeasurementUnit struct {
+type MeasurementUnit struct {
 	ID   int32  `json:"id"`
 	Name string `json:"name"`
 }

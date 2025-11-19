@@ -3,6 +3,7 @@ package middleware
 import (
 	"log/slog"
 	"net/http"
+	"os"
 )
 
 type responseWriter struct {
@@ -23,8 +24,13 @@ func LogRequest(next http.Handler) http.Handler {
 		}
 
 		next.ServeHTTP(wrapped, r)
+		handler := slog.NewTextHandler(
+			os.Stdout,
+			&slog.HandlerOptions{
+				Level: slog.LevelDebug})
+		logger := slog.New(handler)
 
-		slog.Info("Request",
+		logger.Info("Request",
 			"method", r.Method,
 			"url", r.URL.Path,
 			"status", wrapped.statusCode)
