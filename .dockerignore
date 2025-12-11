@@ -15,6 +15,7 @@ docker-compose.yml
 # IDE and editor files
 .vscode
 .idea
+.zed
 *.swp
 *.swo
 *~

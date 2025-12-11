@@ -1,0 +1,1331 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "Swagger Pet Checkup - OpenAPI 3.1",
+    "description": "API Системы учета анализа питомцев",
+    "termsOfService": "https://swagger.io/terms/",
+    "contact": {
+      "email": "apiteam@swagger.io"
+    },
+    "license": {
+      "name": "Apache 2.0",
+      "url": "https://www.apache.org/licenses/LICENSE-2.0.html"
+    },
+    "version": "1.0.0"
+  },
+  "externalDocs": {
+    "description": "Find out more about Swagger",
+    "url": "https://swagger.io"
+  },
+  "servers": [
+    {
+      "url": "https://petstore31.swagger.io/api/v3"
+    }
+  ],
+  "tags": [
+    {
+      "name": "pet",
+      "description": "Справочник питомцев"
+    },
+    {
+      "name": "component",
+      "description": "Компоненты анализов"
+    },
+    {
+      "name": "measurement_unit",
+      "description": "Единицы измерения"
+    },
+    {
+      "name": "panel",
+      "description": "Анализ"
+    }
+  ],
+  "paths": {
+    "/pet": {
+      "get": {
+        "tags": [
+          "pet"
+        ],
+        "summary": "Информация о питомцах",
+        "description": "Получить список питомцев",
+        "operationId": "getPets",
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ListReadPet"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "pet"
+        ],
+        "summary": "Добавить питомца",
+        "description": "Добавление записи о питомце",
+        "operationId": "addPet",
+        "requestBody": {
+          "description": "Создать запись о питомце",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreatePet"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ReadPet"
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "$ref": "#/components/schemas/ReadPet"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid input"
+          },
+          "422": {
+            "description": "Validation exception"
+          },
+          "default": {
+            "description": "Unexpected error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/pet/{id}": {
+      "get": {
+        "tags": [
+          "pet"
+        ],
+        "summary": "Получить информацию о питомце",
+        "description": "Предоставляет данные о питомце из БД.",
+        "operationId": "getPetById",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Идентификатор в БД",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ReadPet"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid ID supplied"
+          },
+          "404": {
+            "description": "Pet not found"
+          },
+          "default": {
+            "description": "Unexpected error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      },
+      "patch": {
+        "tags": [
+          "pet"
+        ],
+        "summary": "Обновить запись о питомце",
+        "description": "Обновить запись о питомце по его ID",
+        "operationId": "updatePet",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Идентификатор в БД",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "Обновить запись о питомце",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PatchPet"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ReadPet"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid ID supplied"
+          },
+          "404": {
+            "description": "Pet not found"
+          },
+          "422": {
+            "description": "Validation exception"
+          },
+          "default": {
+            "description": "Unexpected error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "pet"
+        ],
+        "summary": "Удалить питомца",
+        "description": "Удаление записи о питомце",
+        "operationId": "deletePet",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Идентификатор питомца",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "successful operation"
+          },
+          "400": {
+            "description": "Invalid pet value"
+          },
+          "default": {
+            "description": "Unexpected error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/component": {
+      "get": {
+        "tags": [
+          "component"
+        ],
+        "summary": "Получить список компонентов",
+        "description": "Получить список доступных компонентов анализов",
+        "operationId": "getComponents",
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ListReadComponent"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "component"
+        ],
+        "summary": "Создать компонент анализа",
+        "description": "Добавить запись о компоненте анализа",
+        "operationId": "createComponent",
+        "requestBody": {
+          "description": "Компонент анализа: название, допустимые значения, единица измерения",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateComponent"
+              }
+            }
+          },
+          "required": true
+        }
+      }
+    },
+    "/component/{id}": {
+      "get": {
+        "tags": [
+          "component"
+        ],
+        "summary": "Получить информацию о компоненте",
+        "description": "Предоставляет данные о компоненте из БД.",
+        "operationId": "getComponentByID",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Идентификатор в БД",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ReadComponent"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid ID supplied"
+          },
+          "404": {
+            "description": "Component not found"
+          },
+          "default": {
+            "description": "Unexpected error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      },
+      "patch": {
+        "tags": [
+          "component"
+        ],
+        "summary": "Получить информацию о компоненте",
+        "description": "Предоставляет данные о компоненте из БД.",
+        "operationId": "patchComponentByID",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Идентификатор в БД",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "Обновить запись о компоненте",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PatchComponent"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ReadPet"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid ID supplied"
+          },
+          "404": {
+            "description": "Component not found"
+          },
+          "422": {
+            "description": "Validation exception"
+          },
+          "default": {
+            "description": "Unexpected error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "component"
+        ],
+        "summary": "Получить информацию о компоненте",
+        "description": "Предоставляет данные о компоненте из БД.",
+        "operationId": "deleteComponentByID",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Идентификатор в БД",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "successful operation"
+          },
+          "400": {
+            "description": "Invalid pet value"
+          },
+          "default": {
+            "description": "Unexpected error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/measurement_unit": {
+      "get": {
+        "tags": [
+          "measurement_unit"
+        ],
+        "summary": "Информация о единицах измерения",
+        "description": "Получить список единиц измерений",
+        "operationId": "getMeasurementUnits",
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ListReadPet"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "measurement_unit"
+        ],
+        "summary": "Добавить единицу измерения",
+        "description": "Добавление записи о единице измерения",
+        "operationId": "addMeasurementUnit",
+        "requestBody": {
+          "description": "Создать запись о единице измерения",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateMeasurementUnit"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ReadMeasurementUnit"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid input"
+          },
+          "422": {
+            "description": "Validation exception"
+          },
+          "default": {
+            "description": "Unexpected error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/measurement_unit/{id}": {
+      "get": {
+        "tags": [
+          "measurement_unit"
+        ],
+        "summary": "Получить информацию о единице измерения",
+        "description": "Предоставляет данные о единице измерения из БД",
+        "operationId": "getMeasurementUnitByID",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Идентификатор в БД",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ReadMeasurementUnit"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid ID supplied"
+          },
+          "404": {
+            "description": "Component not found"
+          },
+          "default": {
+            "description": "Unexpected error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      },
+      "patch": {
+        "tags": [
+          "measurement_unit"
+        ],
+        "summary": "Изменить информацию о единице измерения",
+        "description": "Обновляет данные о единице измерения в БД",
+        "operationId": "patchMeasurementUnitByID",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Идентификатор в БД",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "Обновить запись о единице измерения",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PatchMeasurementUnit"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ReadMeasurementUnit"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid ID supplied"
+          },
+          "404": {
+            "description": "Component not found"
+          },
+          "422": {
+            "description": "Validation exception"
+          },
+          "default": {
+            "description": "Unexpected error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "measurement_unit"
+        ],
+        "summary": "Удалить информацию о единице измерения",
+        "description": "Удаляет данные о единице измерения из БД",
+        "operationId": "deleteMeasurementUnitByID",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Идентификатор в БД",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Successful operation"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "default": {
+            "description": "Unexpected error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/panel": {
+      "get": {
+        "tags": [
+          "panel"
+        ],
+        "summary": "Информация о взятых анализах",
+        "description": "Получить список анализов",
+        "operationId": "getPanels",
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ListPanel"
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "$ref": "#/components/schemas/ListPanel"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Unexpected error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "panel"
+        ],
+        "summary": "Создать Анализ",
+        "description": "Создать запись об анализе",
+        "operationId": "addPanel",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreatePanel"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PanelDate"
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "$ref": "#/components/schemas/ReadMeasurementUnit"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation exception"
+          },
+          "default": {
+            "description": "Unexpected error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/panel/{id}": {
+      "get": {
+        "tags": [
+          "panel"
+        ],
+        "summary": "Получить информацию об анализе",
+        "description": "Получить запись об анализе",
+        "operationId": "getPanelByID",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Идентификатор в БД",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ReadPanelDetail"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation exception"
+          },
+          "default": {
+            "description": "Unexpected error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      },
+      "patch": {
+        "tags": [
+          "panel"
+        ],
+        "summary": "Изменить информацию об анализе",
+        "description": "Обновляет данные об анализе в БД",
+        "operationId": "patchPanelByID",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Идентификатор в БД",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "Обновить запись об анализе",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PatchPanel"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ReadPanel"
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "$ref": "#/components/schemas/ReadPanel"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid ID supplied"
+          },
+          "404": {
+            "description": "Component not found"
+          },
+          "422": {
+            "description": "Validation exception"
+          },
+          "default": {
+            "description": "Unexpected error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "panel"
+        ],
+        "summary": "Удалить информацию об анализе",
+        "description": "Удаляет данные об анализе",
+        "operationId": "deletePanelByID",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Идентификатор в БД",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Successful operation"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "default": {
+            "description": "Unexpected error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "ConstrainedStringField": {
+        "type": "string",
+        "minLength": 1,
+        "maxLength": 128
+      },
+      "IdentifierField": {
+        "type": "integer",
+        "format": "int32",
+        "minimum": 1,
+        "examples": [
+          1,
+          10,
+          23
+        ]
+      },
+      "CreatePet": {
+        "required": [
+          "name"
+        ],
+        "type": "object",
+        "properties": {
+          "name": {
+            "$ref": "#/components/schemas/ConstrainedStringField"
+          },
+          "passport": {
+            "$ref": "#/components/schemas/ConstrainedStringField"
+          },
+          "chip": {
+            "$ref": "#/components/schemas/ConstrainedStringField"
+          }
+        }
+      },
+      "PatchPet": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "$ref": "#/components/schemas/ConstrainedStringField"
+          },
+          "passport": {
+            "$ref": "#/components/schemas/ConstrainedStringField"
+          },
+          "chip": {
+            "$ref": "#/components/schemas/ConstrainedStringField"
+          }
+        }
+      },
+      "ReadPet": {
+        "required": [
+          "name"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "$ref": "#/components/schemas/IdentifierField"
+          },
+          "name": {
+            "$ref": "#/components/schemas/ConstrainedStringField"
+          },
+          "passport": {
+            "$ref": "#/components/schemas/ConstrainedStringField"
+          },
+          "chip": {
+            "$ref": "#/components/schemas/ConstrainedStringField"
+          }
+        },
+        "xml": {
+          "name": "pet"
+        }
+      },
+      "ListReadPet": {
+        "type": "array",
+        "items": {
+          "$ref": "#/components/schemas/ReadPet"
+        }
+      },
+      "CreateComponent": {
+        "type": "object",
+        "required": [
+          "name",
+          "unit_id",
+          "min_amount",
+          "max_amount"
+        ],
+        "properties": {
+          "name": {
+            "$ref": "#/components/schemas/ConstrainedStringField"
+          },
+          "unit_id": {
+            "$ref": "#/components/schemas/IdentifierField"
+          },
+          "min_amount": {
+            "type": "number"
+          },
+          "max_amount": {
+            "type": "number"
+          },
+          "comment": {
+            "type": "string"
+          }
+        }
+      },
+      "PatchComponent": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "$ref": "#/components/schemas/ConstrainedStringField"
+          },
+          "unit_id": {
+            "$ref": "#/components/schemas/IdentifierField"
+          },
+          "min_amount": {
+            "type": "number"
+          },
+          "max_amount": {
+            "type": "number"
+          },
+          "comment": {
+            "type": "string"
+          }
+        }
+      },
+      "ReadComponent": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "$ref": "#/components/schemas/IdentifierField"
+          },
+          "name": {
+            "$ref": "#/components/schemas/ConstrainedStringField"
+          },
+          "unit": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "$ref": "#/components/schemas/IdentifierField"
+              },
+              "name": {
+                "$ref": "#/components/schemas/ConstrainedStringField"
+              }
+            }
+          },
+          "min_amount": {
+            "type": "number"
+          },
+          "max_amount": {
+            "type": "number"
+          },
+          "comment": {
+            "type": "string"
+          }
+        }
+      },
+      "ListReadComponent": {
+        "type": "array",
+        "items": {
+          "$ref": "#/components/schemas/ReadComponent"
+        }
+      },
+      "CreateMeasurementUnit": {
+        "type": "object",
+        "required": [
+          "name"
+        ],
+        "properties": {
+          "name": {
+            "$ref": "#/components/schemas/ConstrainedStringField"
+          }
+        }
+      },
+      "PatchMeasurementUnit": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "$ref": "#/components/schemas/ConstrainedStringField"
+          }
+        }
+      },
+      "ReadMeasurementUnit": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "$ref": "#/components/schemas/IdentifierField"
+          },
+          "name": {
+            "$ref": "#/components/schemas/ConstrainedStringField"
+          }
+        }
+      },
+      "ListReadMeasurementUnit": {
+        "type": "array",
+        "items": {
+          "$ref": "#/components/schemas/ReadMeasurementUnit"
+        }
+      },
+      "PanelComponentValue": {
+        "type": "object",
+        "required": [
+          "component_id",
+          "unit_id",
+          "value"
+        ],
+        "properties": {
+          "component_id": {
+            "$ref": "#/components/schemas/IdentifierField"
+          },
+          "unit_id": {
+            "$ref": "#/components/schemas/IdentifierField"
+          },
+          "value": {
+            "type": "number"
+          }
+        }
+      },
+      "PanelComponentValueDetail": {
+        "type": "object",
+        "required": [
+          "component",
+          "unit",
+          "value"
+        ],
+        "properties": {
+          "component": {
+            "type": "object",
+            "required": [
+              "id",
+              "name"
+            ],
+            "properties": {
+              "id": {
+                "$ref": "#/components/schemas/IdentifierField"
+              },
+              "name": {
+                "type": "string"
+              }
+            }
+          },
+          "unit": {
+            "type": "object",
+            "required": [
+              "id",
+              "name"
+            ],
+            "properties": {
+              "id": {
+                "$ref": "#/components/schemas/IdentifierField"
+              },
+              "name": {
+                "$ref": "#/components/schemas/ConstrainedStringField"
+              }
+            }
+          },
+          "value": {
+            "type": "number"
+          }
+        }
+      },
+      "CreatePanel": {
+        "type": "object",
+        "required": [
+          "name",
+          "pet_id"
+        ],
+        "properties": {
+          "name": {
+            "$ref": "#/components/schemas/ConstrainedStringField"
+          },
+          "pet_id": {
+            "$ref": "#/components/schemas/IdentifierField"
+          },
+          "components": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/PanelComponentValue"
+            }
+          },
+          "date_measured": {
+            "type": "string",
+            "format": "date"
+          }
+        }
+      },
+      "PatchPanel": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "$ref": "#/components/schemas/ConstrainedStringField"
+          },
+          "pet_id": {
+            "$ref": "#/components/schemas/IdentifierField"
+          },
+          "components": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/PanelComponentValue"
+            }
+          },
+          "date_measured": {
+            "type": "string",
+            "format": "date"
+          }
+        }
+      },
+      "ReadPanel": {
+        "type": "object",
+        "required": [
+          "id",
+          "pet_id",
+          "components",
+          "date_measured"
+        ],
+        "properties": {
+          "id": {
+            "$ref": "#/components/schemas/IdentifierField"
+          },
+          "pet_id": {
+            "$ref": "#/components/schemas/IdentifierField"
+          },
+          "components": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/IdentifierField"
+            }
+          }
+        }
+      },
+      "ReadPanelDetail": {
+        "type": "object",
+        "required": [
+          "name",
+          "pet_id",
+          "components",
+          "date_measured"
+        ],
+        "properties": {
+          "name": {
+            "$ref": "#/components/schemas/ConstrainedStringField"
+          },
+          "pet_id": {
+            "$ref": "#/components/schemas/IdentifierField"
+          },
+          "components": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/PanelComponentValueDetail"
+            }
+          },
+          "date_measured": {
+            "type": "string",
+            "format": "date"
+          }
+        }
+      },
+      "PanelDate": {
+        "type": "object",
+        "required": [
+          "id",
+          "pet_id",
+          "date_measured"
+        ],
+        "properties": {
+          "id": {
+            "$ref": "#/components/schemas/IdentifierField"
+          },
+          "pet_id": {
+            "$ref": "#/components/schemas/IdentifierField"
+          },
+          "date_measured": {
+            "type": "string",
+            "format": "date"
+          }
+        }
+      },
+      "ListPanel": {
+        "type": "array",
+        "items": {
+          "$ref": "#/components/schemas/PanelDate"
+        }
+      },
+      "Error": {
+        "type": "object",
+        "properties": {
+          "details": {
+            "type": "object"
+          },
+          "message": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "message"
+        ]
+      }
+    },
+    "securitySchemes": {
+      "petstore_auth": {
+        "type": "oauth2",
+        "flows": {
+          "implicit": {
+            "authorizationUrl": "https://petstore3.swagger.io/oauth/authorize",
+            "scopes": {
+              "write:pets": "modify pets in your account",
+              "read:pets": "read your pets"
+            }
+          }
+        }
+      },
+      "api_key": {
+        "type": "apiKey",
+        "name": "api_key",
+        "in": "header"
+      }
+    }
+  }
+}

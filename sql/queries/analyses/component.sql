@@ -16,7 +16,7 @@ RETURNING *;
 -- name: GetByID :one
 SELECT component.id,
 	   component.name,
-	   measurement_unit.name AS unit,
+	   json_build_object('id', component.unit_id, 'name', measurement_unit.name) AS unit,
 	   min_amount,
 	   max_amount,
 	   comment
@@ -27,7 +27,7 @@ WHERE component.id = $1;
 -- name: GetMany :many
 SELECT component.id,
 	   component.name,
-	   measurement_unit.name AS unit,
+	   json_build_object('id', component.unit_id, 'name', measurement_unit.name) AS unit,
 	   min_amount,
 	   max_amount,
 	   comment
